@@ -3,3 +3,4 @@ a říkají mu vycházejícího slunce
 moje matka byla švadlena
 a ušila mi moje modré džíny
 můj otec byl gambler
+v Nových Orleánech
