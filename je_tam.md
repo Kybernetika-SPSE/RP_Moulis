@@ -8,3 +8,5 @@ můj otec byl gambler
 v Nových Orleánech
 teď, jediná věc co gambler potřebuje
 je kufřík a kufr
+a jediný moment kdy je gambler šťastný
+je když je pod vlivem drogy
