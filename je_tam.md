@@ -1,5 +1,7 @@
 Je tam ten dům v Nových Orleánech
 a říkají mu vycházejícího slunce
+a byl ruinou mnoha chudých hochů
+a bože já jsem jeden z nich
 moje matka byla švadlena
 a ušila mi moje modré džíny
 můj otec byl gambler
