@@ -1,15 +1,8 @@
+import serial
 
-#!/usr/bin/env python
+port = serial.Serial("/dev/ttyAMA0", baudrate=9600, timeout=3.0)
 
-import RPi.GPIO as GPIO
-from mfrc522 import SimpleMFRC522
-
-reader = SimpleMFRC522()
-
-try:
-        print("Waiting for you to scan an RFID sticker/card")
-        id = reader.read()[0]
-        print("The ID for this card is:", id)
-        
-finally:
-        GPIO.cleanup()
+while True:
+    port.write("\r\nSay something:")
+    rcv = port.read(10)
+    port.write("\r\nYou sent:" + repr(rcv))
