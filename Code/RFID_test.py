@@ -1,10 +1,14 @@
-from machine import UART, Pin
-import time
+import serial
 
-uart = UART(1, 9600)
-uart.init(9600, bits=8, parity=None, stop=1, rx=15, tx=14)
+ser = serial.Serial('/dev/ttyS0', 9600, timeout=1)
 
 while True:
-    b = uart.read()
-    if not b == None:
-        print(b)
+    string = ser.read(12) 
+
+    if len(string) == 0:
+        print("Please insert a tag")
+        continue
+    else:
+        string = string[1:11] #exclude start x0A and stop x0D bytes
+
+        print(string)
