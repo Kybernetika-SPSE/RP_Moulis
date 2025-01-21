@@ -1,8 +1,19 @@
 import serial
 
-port = serial.Serial("/dev/ttyAMA0", baudrate=9600, timeout=3.0)
+ser = serial.Serial('/dev/ttyAMA0', 9600, timeout=1)
 
 while True:
-    port.write("\r\nSay something:")
-    rcv = port.read(10)
-    port.write("\r\nYou sent:" + repr(rcv))
+    string = ser.read(12) 
+
+    if len(string) == 0:
+        print("Please insert a tag")
+        continue
+    else:
+        string = string[1:11] #exclude start x0A and stop x0D bytes
+
+        if string == '0415DB18A3': 
+            print ("You used your black tag")
+        elif string == '0F03028F57':
+            print ("You used your white tag")
+        else:
+            print ("You do not have a valid tag")
