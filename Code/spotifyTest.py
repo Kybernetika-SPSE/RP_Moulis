@@ -4,6 +4,8 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from time import sleep
 
 DEVICE_ID="35ccd4ae2cab8870610afd219d13b41e84688587"
+SPOTIPY_CLIENT_ID="5984261fa2d845b3bcf6463bb1df2c97"
+SPOTIPY_CLIENT_SECRET="9c2280c3c0ae4d9392a8870b90165b91"
 
 # Spotify Authentication
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials())
