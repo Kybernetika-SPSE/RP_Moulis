@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy.oauth2 import SpotifyOAuth
 from time import sleep
 
 DEVICE_ID="35ccd4ae2cab8870610afd219d13b41e84688587"
