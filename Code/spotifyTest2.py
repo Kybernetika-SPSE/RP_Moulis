@@ -10,7 +10,7 @@ CLIENT_SECRET="9c2280c3c0ae4d9392a8870b90165b91"
 
 
     
-sp = spotipy.Spotify(auth=0ueqzovsyyh02tfkyiygz2j59)
+sp = spotipy.Spotify(auth=  )
 
 
 # Transfer playback to the Raspberry Pi if music is playing on a different device
