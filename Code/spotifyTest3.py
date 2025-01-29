@@ -1,7 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from time import sleep
-sp_auth=spotipy.oauth2.SpotifyOAuth(scope="user-read-playback-state,user-modify-playback-state", state=state)
+sp_auth=spotipy.oauth2.SpotifyOAuth(scope="user-read-playback-state,user-modify-playback-state")
 #url = sp_auth.get_authorize_url()
 auth_token=sp_auth.get_access_token(input())
 
