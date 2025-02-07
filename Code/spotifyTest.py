@@ -3,7 +3,8 @@ from spotipy.oauth2 import SpotifyOAuth
 from time import sleep
 DEVICE_ID = "35ccd4ae2cab8870610afd219d13b41e84688587"
 # Spotify Authentication
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope="user-read-playback-state,user-modify-playback-state"))
+#sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope="user-read-playback-state,user-modify-playback-state"))
+sp = spotipy.Spotify(auth=input("Enter auth token"))
 
 
 
