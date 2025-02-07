@@ -10,7 +10,7 @@ sp = spotipy.Spotify(auth=input("Enter auth token"))
 
 # Transfer playback to the Raspberry Pi if music is playing on a different device
 artist_uri = 'spotify:artist:4Z8W4fKeB5YxbusRsdQVPb'
-results = sp.artist_albums(artist_uri, album_type='album')
+results = sp.artist_albums(artist_id=artist_uri, album_type='album')
 albums = results['items']
 while results['next']:
     results = sp.next(results)
