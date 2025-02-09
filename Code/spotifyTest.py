@@ -15,5 +15,5 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret
 # Transfer playback to the Raspberry Pi if music is playing on a different device
 sp.transfer_playback(device_id=DEVICE_ID, force_play=False)
 #sp.start_playback(device_id=DEVICE_ID, uris=['spotify:track:2XVQdI3m0giGxNrwUhV3yP'])
-sp.start_playback(device_id=DEVICE_ID, uris=['spotify:track:1Z5EUmtUOtCtjBCCrqJVP7'])
- 
+#sp.start_playback(device_id=DEVICE_ID, uris=['spotify:track:1Z5EUmtUOtCtjBCCrqJVP7'])
+sp.start_playback(device_id=DEVICE_ID, uris=['spotify:track:6LgJvl0Xdtc73RJ1mmpotq'])
