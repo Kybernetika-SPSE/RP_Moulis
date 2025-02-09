@@ -77,6 +77,30 @@ sp.transfer_playback(device_id=DEVICE_ID, force_play=True)
 
 while True:
     num = push()
+    if(io.input(pin1)==1):
+        print('1')
+    
+    if(io.input(pin2)==1):
+        print('2')
+        
+    if(io.input(pin3)==1):
+        print('3')
+        
+    if(io.input(pin4)==1):
+        print('4')
+    
+    if(io.input(pinA)==0):
+        print('A')
+    
+    if(io.input(pinB)==0):
+        print('B')
+    
+    if(io.input(pinC)==0):
+        print('C')
+    
+    if(io.input(pinD)==0):
+        print('D')
+    
     if(num != 0 and album[num]!=''):
         sp.start_playback(device_id=DEVICE_ID, uris=[album[num]])
         print(num)
