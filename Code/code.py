@@ -15,7 +15,7 @@ pin1 = 22
 pin2 = 9
 pin3 = 10
 pin4 = 11
-
+io.setmode(io.BCM)
 io.setup(pinA, io.IN, pull_up_down=io.PUD_UP)
 io.setup(pinB, io.IN, pull_up_down=io.PUD_UP)
 io.setup(pinC, io.IN, pull_up_down=io.PUD_UP)
