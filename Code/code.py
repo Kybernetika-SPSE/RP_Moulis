@@ -5,7 +5,7 @@ import RPi.GPIO as io
 client_id='5984261fa2d845b3bcf6463bb1df2c97'
 client_secret='9c2280c3c0ae4d9392a8870b90165b91'
 redirect_uri='http://localhost:8888/callback'
-DEVICE_ID = "edf62e2b191e93da0bfaee84694b175adbc719f5a"
+DEVICE_ID = "edf62e2b191e93da0bfaee84694b175adbc719f5"
 
 pinA = 2
 pinB = 3
