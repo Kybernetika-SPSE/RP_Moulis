@@ -72,7 +72,7 @@ sp.transfer_playback(device_id=DEVICE_ID, force_play=True)
 
 while True:
     num = push()
-    if(num != 0):
+    if(num != 0 and album[num]!=''):
         sp.start_playback(device_id=DEVICE_ID, uris=[album[num]])
         print(num)
         print(album[num])
