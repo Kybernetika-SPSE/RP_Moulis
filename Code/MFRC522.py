@@ -150,7 +150,6 @@ class MFRC522:
         else:
           print ("Error de escritura en bloque")
           return False
-          
       return True    
 
   def readRegister(self, addr):
