@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 
@@ -102,7 +103,7 @@ class MFRC522:
     
   serNum = []
   
-  def __init__(self, dev='/dev/tty1'):
+  def __init__(self, dev='/dev/ttyUSB0'):
     self.ser = serial.Serial(port=dev,baudrate=9600)
     self.reset(spd=1);  
     #self.performSelfTest() 
