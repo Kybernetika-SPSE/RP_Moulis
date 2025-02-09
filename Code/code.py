@@ -50,6 +50,7 @@ def push():
     inx += io.input(pin2)*2
     inx += io.input(pin3)*3
     inx += io.input(pin4)*4
+    print(inx)
     if(inx>4):
         return 0
     if(inx==0):
@@ -58,8 +59,12 @@ def push():
     inx += io.input(pinB)*-20+20
     inx += io.input(pinC)*-30+30
     inx += io.input(pinD)*-40+40    
+    print(inx)
+    if(inx<11):
+        return 0
     if(inx>44):
         return 0
+    print(inx)
     return inx
     
 # Spotify Authentication
