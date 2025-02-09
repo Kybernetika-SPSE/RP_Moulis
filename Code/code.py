@@ -26,9 +26,42 @@ io.setup(pin2, io.IN, pull_up_down=io.PUD_DOWN)
 io.setup(pin3, io.IN, pull_up_down=io.PUD_DOWN)
 io.setup(pin4, io.IN, pull_up_down=io.PUD_DOWN)
 
+album = {11:'spotify:track:2XVQdI3m0giGxNrwUhV3yP',
+         12:'spotify:track:1Z5EUmtUOtCtjBCCrqJVP7',
+         13:'spotify:track:6LgJvl0Xdtc73RJ1mmpotq',
+         14:'',
+         21:'',
+         22:'',
+         23:'',
+         24:'',
+         31:'',
+         32:'',
+         33:'',
+         34:'',
+         41:'',
+         42:'',
+         43:'',
+         44:'',}
+
+
 def push():
-    print(io.input(pin1))
-    print(io.HIGH)
+    inx = 0
+    inx += io.input(pin1)*1
+    inx += io.input(pin2)*2
+    inx += io.input(pin3)*3
+    inx += io.input(pin4)*4
+    if(inx>4):
+        return 0
+    if(inx==0):
+        return 0
+    inx += io.input(pinA)*-10+10
+    inx += io.input(pinB)*-20+20
+    inx += io.input(pinC)*-30+30
+    inx += io.input(pinD)*-40+40    
+    if(inx>44):
+        return 0
+    return inx
+    
 # Spotify Authentication
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri,scope="user-read-playback-state,user-modify-playback-state"))
 
@@ -38,8 +71,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret
 sp.transfer_playback(device_id=DEVICE_ID, force_play=True)
 
 while True:
-    push()
-    #sp.start_playback(device_id=DEVICE_ID, uris=['spotify:track:2XVQdI3m0giGxNrwUhV3yP'])
-    #sp.start_playback(device_id=DEVICE_ID, uris=['spotify:track:1Z5EUmtUOtCtjBCCrqJVP7'])
-
-    #sp.start_playback(device_id=DEVICE_ID, uris=['spotify:track:6LgJvl0Xdtc73RJ1mmpotq'])
+    num = push()
+    if(num != 0):
+        sp.start_playback(device_id=DEVICE_ID, uris=[album[num]])
+        sleep(5)
