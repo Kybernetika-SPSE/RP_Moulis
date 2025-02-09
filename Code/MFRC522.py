@@ -131,34 +131,30 @@ class MFRC522:
       count = 0
       while True:
         self.ser.flushInput()
-        self.ser.write(chr(addr&0x7F))
-        self.ser.write(chr(val))
-        tmp = ord(self.ser.read(1))   
-        if(tmp == addr):      
+        self.ser.write(bytes([addr&0x7F]))
+        self.ser.write(bytes([val]))
+        tmp = int.from_bytes(self.ser.read(1), "big")
+        if(tmp == addr):
           return True
         count+=1
         if(count > 10):
-          print ("Error de escritura en: "+ hex(addr))
+          print ("Write error at: "+ hex(addr))
           return False  
     else:       
       self.ser.flushInput()
-      for txBytes in range (0, size):
-        self.ser.write(chr(addr&0x7F))
-        tmp = ord(self.ser.read(1))
-        if(tmp == addr):
-          self.ser.write(chr(val[txBytes]))
-        else:
-          print ("Error de escritura en bloque")
+      if(tmp == addr):
+          self.ser.write(bytes([val]))
+      else:
+          print ("Block write error")
           return False
       return True    
 
   def readRegister(self, addr):
     self.ser.flushInput()
-    self.ser.write(chr(addr|0x80))
+    self.ser.write(bytes([addr|0x80]))
     val = self.ser.read(1)
-    return ord(val)
-
-  
+    return int.from_bytes(val, "big")
+    
   def setBitMask(self, reg, mask):
     tmp = self.readRegister(reg)
     self.writeRegister(reg, tmp | mask)
