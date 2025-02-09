@@ -74,4 +74,7 @@ while True:
     num = push()
     if(num != 0):
         sp.start_playback(device_id=DEVICE_ID, uris=[album[num]])
+        print(num)
+        print(album[num])
         sleep(5)
+        
