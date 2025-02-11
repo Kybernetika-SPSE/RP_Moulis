@@ -30,7 +30,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret
 DEVICE_ID = "edf62e2b191e93da0bfaee84694b175adbc719f5a"
 # Import necessary libraries for communication and display use
 
-
+print(sp.currently_playing())
 
 display = drivers.Lcd()
 cc = drivers.CustomCharacters(display)
@@ -121,8 +121,8 @@ try:
     print("Writing to display")
     display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
     while True:
-        print(sp.currently_playing())
-        hraje = sp.currently_playing()
+        print(sp.currently_playing()['item']['name'])
+        hraje = sp.currently_playing()['item']['name']
         long_string(display, hraje, 2)
 except KeyboardInterrupt:
     # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
