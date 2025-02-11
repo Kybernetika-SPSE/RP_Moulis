@@ -123,6 +123,9 @@ try:
     while True:
         print(sp.currently_playing()['item']['name'])
         hraje = sp.currently_playing()['item']['name']
+        for i in range(0,16):
+            if i >= len(hraje):
+                hraje = hraje+" "
         long_string(display, hraje, 2)
 except KeyboardInterrupt:
     # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
