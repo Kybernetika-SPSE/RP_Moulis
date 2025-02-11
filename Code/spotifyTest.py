@@ -61,7 +61,13 @@ def diakritika(string=str):
               ['ž','z'],
               ['Ž','Z']]
     for i in range(0,len(prevod)):
-        string.replace(prevod[i][0],prevod[i][1])
+        new = ""
+        for j in range(0,len(string)):
+            if(string[j] == prevod[i][0]):
+                new = new+prevod[i][1]
+            else:
+                new = new+string[j] 
+        string = new
     return string
 
 display = drivers.Lcd()
@@ -165,12 +171,18 @@ if(DEVICE_ID!=""):
 while True:
     try:
         print("Writing to display")
-        display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
+        #display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
         while True:
             print(sp.currently_playing()['item']['name'])
+            print(sp.currently_playing()['item']['album']['artists'][0]['name'])
+            interpret = diakritika(sp.currently_playing()['item']['album']['artists'][0]['name'])
             hraje = diakritika(sp.currently_playing()['item']['name'])
-            print(hraje)
-            for i in range(0,16):
+            delka = max(len(interpret),len(hraje),16)
+            for i in range(0,delka):
+                if i >= len(interpret):
+                    interpret = interpret+" "
+            long_string(display, interpret, 1)
+            for i in range(0,delka):
                 if i >= len(hraje):
                     hraje = hraje+" "
             long_string(display, hraje, 2)
@@ -183,7 +195,6 @@ while True:
         sleep(2)
         try:
             display = drivers.Lcd()
-            cc = drivers.CustomCharacters(display)
             cc.load_custom_characters_data()     
         except:
             print("trying to reconect lcd")
