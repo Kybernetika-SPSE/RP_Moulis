@@ -26,7 +26,7 @@ def long_string(display, text='', num_line=1, num_cols=16):
 # Spotify Authentication
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri,scope="user-read-playback-state,user-modify-playback-state"))
 
-device = sp.devices()[]
+#device = sp.devices()[]
 DEVICE_ID = "edf62e2b191e93da0bfaee84694b175adbc719f5a"
 # Import necessary libraries for communication and display use
 
@@ -119,8 +119,9 @@ cc.char_8_data = ["11111",
 cc.load_custom_characters_data()
 try:
     print("Writing to display")
-    display.lcd_display_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
+    display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
     while True:
+        print(sp.current_playback())
         hraje = sp.current_playback()
         long_string(display, hraje, 2)
 except KeyboardInterrupt:
