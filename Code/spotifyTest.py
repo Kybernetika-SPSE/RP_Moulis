@@ -169,6 +169,7 @@ while True:
         while True:
             print(sp.currently_playing()['item']['name'])
             hraje = diakritika(sp.currently_playing()['item']['name'])
+            print(hraje)
             for i in range(0,16):
                 if i >= len(hraje):
                     hraje = hraje+" "
