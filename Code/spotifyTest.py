@@ -29,14 +29,17 @@ def long_string(display, text='', num_line=1, num_cols=16):
 			sleep(1)
 		else:
 			display.lcd_display_string(text, num_line)  
-def long_string_both(display, text1='', text2='', lenght = 16, num_cols=16):
+def long_string_both(display, text1='', text2='', num_cols=16):
+    lenght = max(len(text1),len(text2))
     if lenght > num_cols:
         display.lcd_display_string(text1[:num_cols], 1)
         display.lcd_display_string(text2[:num_cols], 2)
         sleep(1)
         for i in range(lenght - num_cols + 1):
-            display.lcd_display_string(text1[i:i+num_cols], 1)
-            display.lcd_display_string(text2[i:i+num_cols], 2)
+            if(len(text1 - num_cols + 1)):
+                display.lcd_display_string(text1[i:i+num_cols], 1)
+            if(len(text2 - num_cols + 1)):
+                display.lcd_display_string(text2[i:i+num_cols], 2)
             sleep(0.2)
         sleep(1)    
     else:
@@ -191,13 +194,13 @@ while True:
             print(sp.currently_playing()['item']['album']['artists'][0]['name'])
             interpret = diakritika(sp.currently_playing()['item']['album']['artists'][0]['name'])
             hraje = diakritika(sp.currently_playing()['item']['name'])
-            delka = max(len(interpret),len(hraje),16)
-            for i in range(0,delka):
+            for i in range(0,16):
                 if i >= len(interpret):
                     interpret = interpret+" "
+            for i in range(0,16):
                 if i >= len(hraje):
                     hraje = hraje+" "
-            long_string_both(display,interpret,hraje,delka)
+            long_string_both(display,interpret,hraje)
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
         print("Cleaning up!")
