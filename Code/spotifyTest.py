@@ -121,8 +121,8 @@ try:
     print("Writing to display")
     display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
     while True:
-        print(sp.current_playback())
-        hraje = sp.current_playback()
+        print(sp.currently_playing())
+        hraje = sp.currently_playing()
         long_string(display, hraje, 2)
 except KeyboardInterrupt:
     # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
