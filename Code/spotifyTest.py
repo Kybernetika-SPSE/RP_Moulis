@@ -36,9 +36,9 @@ def long_string_both(display, text1='', text2='', num_cols=16):
         display.lcd_display_string(text2[:num_cols], 2)
         sleep(1)
         for i in range(lenght - num_cols + 1):
-            if(len(text1 - num_cols + 1)):
+            if(len(text1) - num_cols + 1):
                 display.lcd_display_string(text1[i:i+num_cols], 1)
-            if(len(text2 - num_cols + 1)):
+            if(len(text2) - num_cols + 1):
                 display.lcd_display_string(text2[i:i+num_cols], 2)
             sleep(0.2)
         sleep(1)    
