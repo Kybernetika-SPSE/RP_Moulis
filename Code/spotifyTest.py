@@ -127,19 +127,22 @@ cc.char_8_data = ["11111",
                   "11111"]
 # Load custom characters data to CG RAM:
 cc.load_custom_characters_data()
-try:
-    print("Writing to display")
-    display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
-    while True:
-        print(sp.currently_playing()['item']['name'])
-        hraje = sp.currently_playing()['item']['name']
-        for i in range(0,16):
-            if i >= len(hraje):
-                hraje = hraje+" "
-        long_string(display, hraje, 2)
-except KeyboardInterrupt:
-    # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
-    print("Cleaning up!")
-    display.lcd_clear()
+while True:
+    try:
+        print("Writing to display")
+        display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
+        while True:
+            print(sp.currently_playing()['item']['name'])
+            hraje = sp.currently_playing()['item']['name']
+            for i in range(0,16):
+                if i >= len(hraje):
+                    hraje = hraje+" "
+            long_string(display, hraje, 2)
+    except KeyboardInterrupt:
+        # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
+        print("Cleaning up!")
+        display.lcd_clear()
+        break
+    
 
 
