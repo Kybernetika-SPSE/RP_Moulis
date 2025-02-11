@@ -29,6 +29,126 @@ def long_string(display, text='', num_line=1, num_cols=16):
 			sleep(1)
 		else:
 			display.lcd_display_string(text, num_line)
+def lcd_init():
+    display = drivers.Lcd()
+    cc = drivers.CustomCharacters(display)
+    
+    # Redefine the default characters:
+    # Custom caracter #1. Code {0x00}.
+    cc.char_1_data = ["00010",
+                    "00100",
+                    "01110",
+                    "00001",
+                    "01111",
+                    "10001",
+                    "01111",
+                    "00000"]
+
+    # Custom caracter #2. Code {0x01}.
+    cc.char_2_data = ["01010",
+                    "00100",
+                    "01110",
+                    "10001",
+                    "11111",
+                    "10000",
+                    "01110",
+                    "00000"]
+
+    # Custom caracter #3. Code {0x02}.
+    cc.char_3_data = ["10001",
+                    "10001",
+                    "10001",
+                    "11111",
+                    "11111",
+                    "11111",
+                    "11111",
+                    "11111"]
+
+    # Custom caracter #4. Code {0x03}.
+    cc.char_4_data = ["11111",
+                    "11011",
+                    "10001",
+                    "10001",
+                    "10001",
+                    "10001",
+                    "11011",
+                    "11111"]
+
+    # Custom caracter #5. Code {0x04}.
+    cc.char_5_data = ["00000",
+                    "00000",
+                    "11011",
+                    "11011",
+                    "00000",
+                    "10001",
+                    "01110",
+                    "00000"]
+
+    # Custom caracter #6. Code {0x05}.
+    cc.char_6_data = ["01010",
+                    "11111",
+                    "11111",
+                    "01110",
+                    "00100",
+                    "00000",
+                    "00000",
+                    "00000"]
+
+    # Custom caracter #7. Code {0x06}.
+    cc.char_7_data = ["11111",
+                    "11011",
+                    "10001",
+                    "10101",
+                    "10101",
+                    "10101",
+                    "11011",
+                    "11111"]
+
+    # Custom caracter #8. Code {0x07}.
+    cc.char_8_data = ["11111",
+                    "10001",
+                    "11111",
+                    "00000",
+                    "00000",
+                    "11111",
+                    "10001",
+                    "11111"]
+    cc.load_custom_characters_data()
+def diakritika(string=str):
+    prevod = [['á','a'],
+              ['Á','A'],
+              ['č','c'],
+              ['Č','C'],
+              ['ď','d'],
+              ['Ď','D'],
+              ['ě','e'],
+              ['é','e'],
+              ['Ě','E'],
+              ['É','E'],
+              ['í','i'],
+              ['Í','I'],
+              ['ň','n'],
+              ['Ň','N'],
+              ['ó','o'],
+              ['Ó','O'],
+              ['ř','r'],
+              ['Ř','R'],
+              ['š','s'],
+              ['Š','S'],
+              ['ť','t'],
+              ['Ť','T'],
+              ['ú','u'],
+              ['Ú','U'],
+              ['ů','u'],
+              ['Ů','U'],
+              ['ý','y'],
+              ['Ý','Y'],
+              ['ž','z'],
+              ['Ž','Z']]
+    for i in range(0,len(prevod)):
+        string.replace(prevod[i][0],prevod[i][1])
+    return string
+
 
 # Spotify Authentication
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri,scope="user-read-playback-state,user-modify-playback-state"))
@@ -38,102 +158,19 @@ DEVICE_ID = get_device(device_name)
 if(DEVICE_ID!=""):
     sp.transfer_playback(DEVICE_ID,True)
     sp.volume(100,DEVICE_ID)
-# Import necessary libraries for communication and display use
+
+lcd_init()
 
 
 
-display = drivers.Lcd()
-cc = drivers.CustomCharacters(display)
 
-# Redefine the default characters:
-# Custom caracter #1. Code {0x00}.
-cc.char_1_data = ["00010",
-                  "00100",
-                  "01110",
-                  "00001",
-                  "01111",
-                  "10001",
-                  "01111",
-				  "00000"]
-
-# Custom caracter #2. Code {0x01}.
-cc.char_2_data = ["01010",
-                  "00100",
-                  "01110",
-                  "10001",
-                  "11111",
-                  "10000",
-                  "01110",
-                  "00000"]
-
-# Custom caracter #3. Code {0x02}.
-cc.char_3_data = ["10001",
-                  "10001",
-                  "10001",
-                  "11111",
-                  "11111",
-                  "11111",
-                  "11111",
-                  "11111"]
-
-# Custom caracter #4. Code {0x03}.
-cc.char_4_data = ["11111",
-                  "11011",
-                  "10001",
-                  "10001",
-                  "10001",
-                  "10001",
-                  "11011",
-                  "11111"]
-
-# Custom caracter #5. Code {0x04}.
-cc.char_5_data = ["00000",
-                  "00000",
-                  "11011",
-                  "11011",
-                  "00000",
-                  "10001",
-                  "01110",
-                  "00000"]
-
-# Custom caracter #6. Code {0x05}.
-cc.char_6_data = ["01010",
-                  "11111",
-                  "11111",
-                  "01110",
-                  "00100",
-                  "00000",
-                  "00000",
-                  "00000"]
-
-# Custom caracter #7. Code {0x06}.
-cc.char_7_data = ["11111",
-                  "11011",
-                  "10001",
-                  "10101",
-                  "10101",
-                  "10101",
-                  "11011",
-                  "11111"]
-
-# Custom caracter #8. Code {0x07}.
-cc.char_8_data = ["11111",
-                  "10001",
-                  "11111",
-                  "00000",
-                  "00000",
-                  "11111",
-                  "10001",
-                  "11111"]
-# Load custom characters data to CG RAM:
-cc.load_custom_characters_data()
 while True:
     try:
         print("Writing to display")
         display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
         while True:
             print(sp.currently_playing()['item']['name'])
-            hraje = sp.currently_playing()['item']['name']
+            hraje = diakritika(sp.currently_playing()['item']['name'])
             for i in range(0,16):
                 if i >= len(hraje):
                     hraje = hraje+" "
@@ -145,7 +182,8 @@ while True:
         break
     except OSError:
         sleep(2)
-        display = drivers.Lcd()
+        lcd_init()
+        
         
     
 
