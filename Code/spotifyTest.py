@@ -180,10 +180,12 @@ while True:
         break
     except OSError:
         sleep(2)
-        display = drivers.Lcd()
-        cc = drivers.CustomCharacters(display)
-        cc.load_custom_characters_data()     
-        
+        try:
+            display = drivers.Lcd()
+            cc = drivers.CustomCharacters(display)
+            cc.load_custom_characters_data()     
+        except:
+            print("trying to reconect lcd")
     
 
 
