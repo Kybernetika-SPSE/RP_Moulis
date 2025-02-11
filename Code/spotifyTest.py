@@ -143,8 +143,10 @@ while True:
         print("Cleaning up!")
         display.lcd_clear()
         break
-    finally:
+    except OSError:
         sleep(2)
+        display = drivers.Lcd()
+        
     
 
 
