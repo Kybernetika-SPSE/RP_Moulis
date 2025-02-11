@@ -6,7 +6,15 @@ from datetime import datetime
 client_id='5984261fa2d845b3bcf6463bb1df2c97'
 client_secret='9c2280c3c0ae4d9392a8870b90165b91'
 redirect_uri='http://localhost:8888/callback'
-
+device_name = 'RPI'
+def get_device(name):
+    device = sp.devices()['devices']
+    print(device)
+    out = ""
+    for i in range(0,len(device)):
+        if(device[i]['name']==name):
+            out = device[i]['id']
+    return out
 def long_string(display, text='', num_line=1, num_cols=16):
 		""" 
 		Parameters: (driver, string to print, number of line to print, number of columns of your display)
@@ -27,7 +35,9 @@ def long_string(display, text='', num_line=1, num_cols=16):
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri,scope="user-read-playback-state,user-modify-playback-state"))
 
 #device = sp.devices()[]
-DEVICE_ID = "edf62e2b191e93da0bfaee84694b175adbc719f5a"
+DEVICE_ID = get_device(device_name)
+if(DEVICE_ID!=""):
+	sp.transfer_playback(DEVICE_ID,True)
 # Import necessary libraries for communication and display use
 
 print(sp.currently_playing())
