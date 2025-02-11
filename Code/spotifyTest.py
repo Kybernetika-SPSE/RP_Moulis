@@ -195,7 +195,6 @@ while True:
             for i in range(0,delka):
                 if i >= len(interpret):
                     interpret = interpret+" "
-            for i in range(0,delka):
                 if i >= len(hraje):
                     hraje = hraje+" "
             long_string_both(display,interpret,hraje,delka)
