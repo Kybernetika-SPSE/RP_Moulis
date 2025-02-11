@@ -9,7 +9,6 @@ redirect_uri='http://localhost:8888/callback'
 device_name = 'RPI'
 def get_device(name):
     device = sp.devices()['devices']
-    print(device)
     out = ""
     for i in range(0,len(device)):
         if(device[i]['name']==name):
@@ -37,7 +36,8 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret
 #device = sp.devices()[]
 DEVICE_ID = get_device(device_name)
 if(DEVICE_ID!=""):
-	sp.transfer_playback(DEVICE_ID,True)
+    sp.transfer_playback(DEVICE_ID,True)
+    sp.volume(100,DEVICE_ID)
 # Import necessary libraries for communication and display use
 
 
