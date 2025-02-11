@@ -40,7 +40,7 @@ if(DEVICE_ID!=""):
 	sp.transfer_playback(DEVICE_ID,True)
 # Import necessary libraries for communication and display use
 
-print(sp.currently_playing())
+
 
 display = drivers.Lcd()
 cc = drivers.CustomCharacters(display)
@@ -143,6 +143,8 @@ while True:
         print("Cleaning up!")
         display.lcd_clear()
         break
+    finally:
+        sleep(2)
     
 
 
