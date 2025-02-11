@@ -14,7 +14,6 @@ from datetime import datetime
 display = drivers.Lcd()
 
 try:
-    display.lcd_backlight(1)
     print("Writing to display")
     display.lcd_display_string("No time to waste", 1)  # Write line of text to first line of display
     while True:
