@@ -237,6 +237,7 @@ while not io.input(26):
         print("Writing to display")
         #display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
         while not io.input(26):
+            print(type(sp.current_playback()))
             if(sp.current_playback()['device']['id']==DEVICE_ID):
                 if(vol_set == 0):
                     sp.volume(100,DEVICE_ID)
@@ -278,6 +279,9 @@ while not io.input(26):
     except OSError:
         sleep(2)
         try:
+            io.setmode(io.BCM)
+            io.setup(screen, io.OUT)
+            io.setup(26, io.IN, pull_up_down=io.PUD_UP)
             display = drivers.Lcd()
             cc.load_custom_characters_data()     
         except:
