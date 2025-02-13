@@ -49,6 +49,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     if play:
         if(lenght > num_cols):
             print(i)
+            print(perf_counter())
 
 
         else:
