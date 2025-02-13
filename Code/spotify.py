@@ -242,9 +242,11 @@ while not io.input(26):
                     sp.volume(100,DEVICE_ID)
                     vol_set = 1
                 io.output(screen, True)
+                print("on")
             else:
                 io.output(screen, False)
                 vol_set = 0
+                print("off")
             
             if new_instance:
                 new_instance = False
