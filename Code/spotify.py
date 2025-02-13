@@ -31,6 +31,9 @@ def long_string(display, text='', num_line=1, num_cols=16):
 
 
 def long_string_both(display, text1='', text2='', play=True, num_cols=16):
+    global refresh
+    global display_temp
+    global refresh_period
     lenght = max(len(text1),len(text2))
     if refresh == True:
         refresh = False
