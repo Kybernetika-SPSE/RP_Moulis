@@ -244,13 +244,11 @@ while not io.input(26):
                 io.output(screen, False)
                 vol_set = 0
                 
-            
-            print(sp.currently_playing()['item']['name'])
-            print(sp.currently_playing()['item']['album']['artists'][0]['name'])
-            
             if(hraje!=diakritika(sp.currently_playing()['item']['name'])):
                 refresh = True
                 print("New song")
+                print(sp.currently_playing()['item']['name'])
+                print(sp.currently_playing()['item']['album']['artists'][0]['name'])
 
             playing = sp.current_playback()['is_playing']
 
