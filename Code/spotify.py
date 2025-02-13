@@ -8,6 +8,8 @@ client_id='5984261fa2d845b3bcf6463bb1df2c97'
 client_secret='9c2280c3c0ae4d9392a8870b90165b91'
 redirect_uri='http://localhost:8888/callback'
 device_name = 'RPI'
+
+
 def get_device(name):
     device = sp.devices()['devices']
     out = ""
@@ -86,105 +88,108 @@ def diakritika(string=str):
                 new = new+string[j] 
         string = new
     return string
+def customchar():
+    cc = drivers.CustomCharacters(display)
 
+    # Redefine the default characters:
+    # Custom caracter #1. Code {0x00}.
+    cc.char_1_data = ["00010",
+                    "00100",
+                    "01110",
+                    "00001",
+                    "01111",
+                    "10001",
+                    "01111",
+                    "00000"]
+
+    # Custom caracter #2. Code {0x01}.
+    cc.char_2_data = ["01010",
+                    "00100",
+                    "01110",
+                    "10001",
+                    "11111",
+                    "10000",
+                    "01110",
+                    "00000"]
+
+    # Custom caracter #3. Code {0x02}.
+    cc.char_3_data = ["10001",
+                    "10001",
+                    "10001",
+                    "11111",
+                    "11111",
+                    "11111",
+                    "11111",
+                    "11111"]
+
+    # Custom caracter #4. Code {0x03}.
+    cc.char_4_data = ["11111",
+                    "11011",
+                    "10001",
+                    "10001",
+                    "10001",
+                    "10001",
+                    "11011",
+                    "11111"]
+
+    # Custom caracter #5. Code {0x04}.
+    cc.char_5_data = ["00000",
+                    "00000",
+                    "11011",
+                    "11011",
+                    "00000",
+                    "10001",
+                    "01110",
+                    "00000"]
+
+    # Custom caracter #6. Code {0x05}.
+    cc.char_6_data = ["01010",
+                    "11111",
+                    "11111",
+                    "01110",
+                    "00100",
+                    "00000",
+                    "00000",
+                    "00000"]
+
+    # Custom caracter #7. Code {0x06}.
+    cc.char_7_data = ["11111",
+                    "11011",
+                    "10001",
+                    "10101",
+                    "10101",
+                    "10101",
+                    "11011",
+                    "11111"]
+
+    # Custom caracter #8. Code {0x07}.
+    cc.char_8_data = ["11111",
+                    "10001",
+                    "11111",
+                    "00000",
+                    "00000",
+                    "11111",
+                    "10001",
+                    "11111"]
+    cc.load_custom_characters_data()
+     
 io.setmode(io.BCM)
 io.setup(4, io.OUT)
 display = drivers.Lcd()
-cc = drivers.CustomCharacters(display)
 
-# Redefine the default characters:
-# Custom caracter #1. Code {0x00}.
-cc.char_1_data = ["00010",
-                "00100",
-                "01110",
-                "00001",
-                "01111",
-                "10001",
-                "01111",
-                "00000"]
-
-# Custom caracter #2. Code {0x01}.
-cc.char_2_data = ["01010",
-                "00100",
-                "01110",
-                "10001",
-                "11111",
-                "10000",
-                "01110",
-                "00000"]
-
-# Custom caracter #3. Code {0x02}.
-cc.char_3_data = ["10001",
-                "10001",
-                "10001",
-                "11111",
-                "11111",
-                "11111",
-                "11111",
-                "11111"]
-
-# Custom caracter #4. Code {0x03}.
-cc.char_4_data = ["11111",
-                "11011",
-                "10001",
-                "10001",
-                "10001",
-                "10001",
-                "11011",
-                "11111"]
-
-# Custom caracter #5. Code {0x04}.
-cc.char_5_data = ["00000",
-                "00000",
-                "11011",
-                "11011",
-                "00000",
-                "10001",
-                "01110",
-                "00000"]
-
-# Custom caracter #6. Code {0x05}.
-cc.char_6_data = ["01010",
-                "11111",
-                "11111",
-                "01110",
-                "00100",
-                "00000",
-                "00000",
-                "00000"]
-
-# Custom caracter #7. Code {0x06}.
-cc.char_7_data = ["11111",
-                "11011",
-                "10001",
-                "10101",
-                "10101",
-                "10101",
-                "11011",
-                "11111"]
-
-# Custom caracter #8. Code {0x07}.
-cc.char_8_data = ["11111",
-                "10001",
-                "11111",
-                "00000",
-                "00000",
-                "11111",
-                "10001",
-                "11111"]
-cc.load_custom_characters_data()
 # Spotify Authentication
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri,scope="user-read-playback-state,user-modify-playback-state"))
 
 #device = sp.devices()[]
 DEVICE_ID = get_device(device_name)
+print(DEVICE_ID)
 #if(DEVICE_ID!=""):
     #sp.transfer_playback(DEVICE_ID,True)
     #sp.volume(100,DEVICE_ID)
 vol_set = 0
 
-
-
+#uncoment when using custom characters
+#customchar()
 
 
 while True:
@@ -205,7 +210,9 @@ while True:
                 print("screen On")
             else:
                 io.output(4, False)
-            
+                print("screen OF")
+
+            print(io.input(4))
 
             print(sp.currently_playing()['item']['name'])
             print(sp.currently_playing()['item']['album']['artists'][0]['name'])
