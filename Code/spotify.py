@@ -211,7 +211,7 @@ while True:
             else:
                 io.output(4, False)
                 print("screen OF")
-
+            print(sp.current_playback()['is_playing'])
             print(io.input(4))
 
             print(sp.currently_playing()['item']['name'])
