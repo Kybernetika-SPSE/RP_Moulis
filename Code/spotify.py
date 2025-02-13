@@ -205,11 +205,12 @@ while True:
                 vol_set = 0
                 
 
-        
-            io.output(screen, sp.current_playback()['is_playing'])
+            io.output(17, False)
+            #io.output(screen, sp.current_playback()['is_playing'])
             
             print(sp.current_playback()['is_playing'])
             print(io.input(screen))
+
 
             print(sp.currently_playing()['item']['name'])
             print(sp.currently_playing()['item']['album']['artists'][0]['name'])
