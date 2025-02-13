@@ -6,8 +6,6 @@ import drivers
 from datetime import datetime
 import RPi.GPIO as io
 
-sleep(30)
-
 def get_device(name):
     device = sp.devices()['devices']
     out = ""
