@@ -5,7 +5,7 @@ from time import perf_counter
 import drivers
 from datetime import datetime
 import RPi.GPIO as io
-
+sleep(5)
 print("started")
 
 def get_device(name):
