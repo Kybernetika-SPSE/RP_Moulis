@@ -29,8 +29,6 @@ def long_string(display, text='', num_line=1, num_cols=16):
 			sleep(1)
 		else:
 			display.lcd_display_string(text, num_line)  
-
-
 def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     global refresh
     global tic
@@ -71,7 +69,6 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
         display.lcd_display_extended_string(line=1,string="Pozastaveno {0x01}   ")
         display.lcd_display_string(text1[:num_cols], 2)
     return refresh
-
 def diakritika(string=str):
     prevod = [['á','a'],
               ['Á','A'],
@@ -249,18 +246,20 @@ while not io.input(26):
                 print("New song")
                 print(sp.currently_playing()['item']['name'])
                 print(sp.currently_playing()['item']['album']['artists'][0]['name'])
-            try:
-                playing = sp.current_playback()['is_playing']
-            except:
-                playing = False
+            
+            playing = sp.current_playback()['is_playing']
+            
             
             interpret = diakritika(sp.currently_playing()['item']['album']['artists'][0]['name'])
             hraje = diakritika(sp.currently_playing()['item']['name'])
             long_string_both(display,hraje,interpret,playing)
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
-        
         break
+    except TypeError:
+        display.lcd_display_extended_string(line=1,string="Poastaveno {0x01}     ")
+        display.lcd_display_string("Zadny playback  ", 2)
+        
     except OSError:
         sleep(2)
         try:
