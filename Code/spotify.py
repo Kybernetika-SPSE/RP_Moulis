@@ -209,7 +209,7 @@ while True:
             io.output(screen, sp.current_playback()['is_playing'])
             
             print(sp.current_playback()['is_playing'])
-            print(io.input(screen)))
+            print(io.input(screen))
 
             print(sp.currently_playing()['item']['name'])
             print(sp.currently_playing()['item']['album']['artists'][0]['name'])
