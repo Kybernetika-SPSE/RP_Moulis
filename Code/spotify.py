@@ -235,14 +235,6 @@ customchar()
 while not io.input(26):
     try:
         print("Writing to display")
-        print(type(sp.current_playback()))
-        if(sp.current_playback is None):
-             print("checked")
-             while not io.input(26):
-                io.output(screen, True)
-                display.lcd_display_string("Chyba pri init  ",1)
-                display.lcd_display_string("Pripojte ucet   ", 2)
-
         io.output(screen, False)
         while not io.input(26):
             
@@ -280,8 +272,9 @@ while not io.input(26):
         break
     except TypeError as Te:
         print(Te)
-        display.lcd_display_extended_string(line=1,string="Poastaveno {0x01}     ")
-        display.lcd_display_string("Zadny playback  ", 2)
+        io.output(screen, True)
+        display.lcd_display_string("Chyba pri init  ",1)
+        display.lcd_display_string("Pripojte ucet   ", 2)
         new_instance = True
         
     except OSError:

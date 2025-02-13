@@ -62,5 +62,10 @@ DEVICE_ID = get_device(device_name)
 #print(DEVICE_ID)
 #print(sp.currently_playing()['item']['album']['artists'][0]['name'])
 #print(diakritika(sp.currently_playing()['item']['name']))
-print(sp.current_playback()['is_playing'])
+print("koule")
+try:
+    print(sp.current_playback()['is_playing'])
+except TypeError as Te:
+    if Te == "'NoneType' object is not subscriptable":
+        print("koule2")
 print(sp.current_user()['display_name'])
