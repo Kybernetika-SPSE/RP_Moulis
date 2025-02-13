@@ -14,6 +14,8 @@ playing = True
 display_temp = 0
 refresh_period = 0,2
 screen = 17
+interpret = ""
+hraje = ""
 io.setmode(io.BCM)
 io.setup(screen, io.OUT)
 io.setup(26, io.IN, pull_up_down=io.PUD_UP)
