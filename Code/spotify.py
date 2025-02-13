@@ -230,6 +230,7 @@ while not io.input(26):
             
             if(interpret!=diakritika(sp.currently_playing()['item']['album']['artists'][0]['name']) or hraje!=diakritika(sp.currently_playing()['item']['name'])):
                 refresh = True
+                print("New song")
 
             playing = sp.current_playback()['is_playing']
 
