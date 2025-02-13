@@ -206,7 +206,7 @@ while True:
                 vol_set = 0
                 
             io.cleanup
-            io.output(screen,0)
+            io.output(screen,False)
             #io.output(screen, sp.current_playback()['is_playing'])
             
             print(sp.current_playback()['is_playing'])
