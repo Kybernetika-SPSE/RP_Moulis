@@ -33,8 +33,6 @@ def long_string(display, text='', num_line=1, num_cols=16):
 
 def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     global refresh
-    global refresh_period
-    global refresh_hold
     global tic
     global toc
     lenght = max(len(text1),len(text2))
@@ -45,13 +43,18 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     deltaT = toc-tic
     
     
-    i = int((deltaT)/refresh_period)
+    i = int(deltaT)
     if play:
         if(lenght > num_cols):
-            print(i)
-            print(perf_counter())
-
-
+            if(i*4<len(text1)):
+                display.lcd_display_string(text1[i*4:num_cols+i*4+1], 1)
+            else:  
+                display.lcd_display_string(text1[-num_cols,0], 1)
+            if(i*4<len(text2)):
+                display.lcd_display_string(text2[i*4:num_cols+i*4+1], 2)
+            else:  
+                display.lcd_display_string(text2[-num_cols,0], 2)
+            
         else:
             display.lcd_display_string(text1, 1)  
             display.lcd_display_string(text2, 2)    
@@ -195,8 +198,6 @@ refresh = True
 playing = True
 tic = 0.0
 toc = 0.0
-refresh_period = 0.2
-refresh_hold = 1
 screen = 17
 interpret = ""
 hraje = ""
