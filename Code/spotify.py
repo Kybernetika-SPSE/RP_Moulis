@@ -262,7 +262,8 @@ while not io.input(26):
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
         break
-    except TypeError:
+    except TypeError as Te:
+        print(Te)
         display.lcd_display_extended_string(line=1,string="Poastaveno {0x01}     ")
         display.lcd_display_string("Zadny playback  ", 2)
         
