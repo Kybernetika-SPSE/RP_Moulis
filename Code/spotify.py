@@ -181,7 +181,7 @@ DEVICE_ID = get_device(device_name)
 #if(DEVICE_ID!=""):
     #sp.transfer_playback(DEVICE_ID,True)
     #sp.volume(100,DEVICE_ID)
-
+vol_set = 0
 
 
 
@@ -193,12 +193,19 @@ while True:
         #display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
         while True:
             if(sp.current_playback()['device']['id']==DEVICE_ID):
-                sp.volume(100,DEVICE_ID)
-                if sp.current_playback()['is_playing']==True:
-                    io.output(4, True)
-                else:
-                    io.output(4, False)
-                 
+                if(vol_set == 0):
+                    sp.volume(100,DEVICE_ID)
+                    vol_set = 1
+            else:
+                vol_set = 0
+                
+
+            if sp.current_playback()['is_playing']==True:
+                io.output(4, True)
+                print("screen On")
+            else:
+                io.output(4, False)
+            
 
             print(sp.currently_playing()['item']['name'])
             print(sp.currently_playing()['item']['album']['artists'][0]['name'])
