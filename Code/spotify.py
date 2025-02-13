@@ -57,6 +57,9 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
                     display.lcd_display_string(text1[i:i+num_cols], 1)
                 if(len(text2) - num_cols >= i):
                     display.lcd_display_string(text2[i:i+num_cols], 2)
+            if(deltaT>lenght*refresh_period+refresh_hold):
+                display.lcd_display_string(text1[-16:0], 1)
+                display.lcd_display_string(text2[-16:0], 2)
             if(deltaT>lenght*refresh_period+2*refresh_hold):
                 refresh = True  
         else:
