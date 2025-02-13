@@ -45,23 +45,12 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     deltaT = toc-tic
     
     
-    i = int((deltaT - refresh_hold)/refresh_period)
+    i = int((deltaT)/refresh_period)
     if play:
-        if lenght > num_cols:
-            if(deltaT<=refresh_hold):
-                display.lcd_display_string(text1[:num_cols], 1)
-                display.lcd_display_string(text2[:num_cols], 2)
-            if(deltaT>refresh_hold and deltaT <= refresh_hold+lenght*refresh_period):
-                 
-                if(len(text1) - num_cols >= i):
-                    display.lcd_display_string(text1[i:i+num_cols], 1)
-                if(len(text2) - num_cols >= i):
-                    display.lcd_display_string(text2[i:i+num_cols], 2)
-            if(deltaT>lenght*refresh_period+refresh_hold):
-                display.lcd_display_string(text1[-num_cols:0], 1)
-                display.lcd_display_string(text2[-num_cols:0], 2)
-            if(deltaT>lenght*refresh_period+2*refresh_hold):
-                refresh = True  
+        if(lenght > num_cols):
+            print(i)
+
+
         else:
             display.lcd_display_string(text1, 1)  
             display.lcd_display_string(text2, 2)    
