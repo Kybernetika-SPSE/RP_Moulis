@@ -235,7 +235,6 @@ customchar()
 while not io.input(26):
     try:
         print("Writing to display")
-        io.output(screen, False)
         while not io.input(26):
             
             if(sp.current_playback()['device']['id']==DEVICE_ID):
@@ -276,6 +275,7 @@ while not io.input(26):
         display.lcd_display_string("Chyba pri init  ",1)
         display.lcd_display_string("Pripojte ucet   ", 2)
         new_instance = True
+        sleep(5)
         
     except OSError:
         sleep(2)
