@@ -174,7 +174,6 @@ def customchar():
     cc.load_custom_characters_data()
 screen = 17
 io.setmode(io.BCM)
-
 io.setup(screen, io.OUT)
 display = drivers.Lcd()
 
