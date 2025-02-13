@@ -225,9 +225,7 @@ while not io.input(26):
             long_string_both(display,interpret,hraje)
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
-        print("Cleaning up!")
-        io.cleanup()
-        display.lcd_clear()
+        
         break
     except OSError:
         sleep(2)
@@ -239,3 +237,6 @@ while not io.input(26):
     
 
 
+print("Cleaning up!")
+io.cleanup()
+display.lcd_clear()
