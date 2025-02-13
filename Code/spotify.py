@@ -48,6 +48,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     
     i = int(deltaT)
     print(i)
+    print(i*4)
     print(lenght)
     print(len(text1))
     print(len(text2))
