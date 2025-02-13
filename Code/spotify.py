@@ -247,7 +247,9 @@ while not io.input(26):
                 io.output(screen, False)
                 vol_set = 0
                 print("off")
-            
+            if(DEVICE_ID == ""):
+                DEVICE_ID = get_device(device_name)
+                print(DEVICE_ID)
             if new_instance:
                 new_instance = False
                 new_user = diakritika(sp.current_user()['display_name'])
@@ -283,6 +285,8 @@ while not io.input(26):
         display.lcd_display_string("Pripojte ucet   ", 2)
         new_instance = True
         sleep(5)
+        DEVICE_ID = get_device(device_name)
+        print(DEVICE_ID)
         
     except OSError:
         sleep(2)
