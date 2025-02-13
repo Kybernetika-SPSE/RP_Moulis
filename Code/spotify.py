@@ -69,7 +69,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
             display.lcd_display_string(text2, 2)    
     else:
         display.lcd_display_extended_string(line=1,string="Pozastaveno {0x01}   ")
-        display.lcd_display_string(text2[:num_cols], 2)
+        display.lcd_display_string(text1[:num_cols], 2)
     return refresh
 
 def diakritika(string=str):
@@ -249,9 +249,11 @@ while not io.input(26):
                 print("New song")
                 print(sp.currently_playing()['item']['name'])
                 print(sp.currently_playing()['item']['album']['artists'][0]['name'])
-
-            playing = sp.current_playback()['is_playing']
-
+            try:
+                playing = sp.current_playback()['is_playing']
+            except:
+                playing = False
+            
             interpret = diakritika(sp.currently_playing()['item']['album']['artists'][0]['name'])
             hraje = diakritika(sp.currently_playing()['item']['name'])
             long_string_both(display,hraje,interpret,playing)
