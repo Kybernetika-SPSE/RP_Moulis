@@ -253,6 +253,7 @@ while not io.input(26):
                         new_user = new_user+" " 
                 display.lcd_display_string("Prihlasen jako: ", 1)
                 long_string(new_user, 2)
+                sleep(2)
 
             if(hraje!=diakritika(sp.currently_playing()['item']['name'])):
                 refresh = True
