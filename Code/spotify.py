@@ -87,7 +87,7 @@ def diakritika(string=str):
         string = new
     return string
 
-io.setmode(io.BOARD)
+io.setmode(io.BCM)
 io.setup(4, io.OUT)
 display = drivers.Lcd()
 cc = drivers.CustomCharacters(display)
