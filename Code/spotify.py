@@ -58,6 +58,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
                 display.lcd_display_string(text2[len(text2)-num_cols:len(text2)], 2)
             if(i*4>lenght+4):
                  refresh = True
+                 print("refresh")
             
         else:
             display.lcd_display_string(text1, 1)  
