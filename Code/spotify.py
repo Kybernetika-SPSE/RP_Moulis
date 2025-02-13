@@ -174,7 +174,7 @@ def customchar():
     cc.load_custom_characters_data()
 screen = 17
 io.setmode(io.BCM)
-io.setup(screen, io.OUT)
+io.setup(screen, io.output)
 display = drivers.Lcd()
 
 # Spotify Authentication
@@ -205,11 +205,10 @@ while True:
                 vol_set = 0
                 
             io.cleanup
-            io.output(screen, io.LOW)
-            #io.output(screen, sp.current_playback()['is_playing'])
+            io.OUT(screen, sp.current_playback()['is_playing'])
             
             print(sp.current_playback()['is_playing'])
-            print(io.input(screen))
+            #print(io.input(screen))
 
 
             print(sp.currently_playing()['item']['name'])
