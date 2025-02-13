@@ -192,12 +192,13 @@ vol_set = 0
 screen = 17
 io.setmode(io.BCM)
 io.setup(screen, io.OUT)
+io.setup(26, io.IN, pull_up_down=io.PUD_UP)
 
-while True:
+while not io.input(26):
     try:
         print("Writing to display")
         #display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
-        while True:
+        while not io.input(26):
             if(sp.current_playback()['device']['id']==DEVICE_ID):
                 if(vol_set == 0):
                     sp.volume(100,DEVICE_ID)
