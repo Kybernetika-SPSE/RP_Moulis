@@ -88,7 +88,7 @@ def diakritika(string=str):
     return string
 
 io.setmode(io.BOARD)
-io.setup(4, io.OUT, pull_up_down=io.PUD_DOWN)
+io.setup(4, io.OUT)
 display = drivers.Lcd()
 cc = drivers.CustomCharacters(display)
 
@@ -195,9 +195,9 @@ while True:
             if(sp.current_playback()['device']['id']==DEVICE_ID):
                 sp.volume(100,DEVICE_ID)
                 if sp.current_playback()['is_playing']==True:
-                    io.output(4) = io.HIGH
+                    io.output(4, True)
                 else:
-                    io.output(4) = io.LOW
+                    io.output(4, False)
                  
 
             print(sp.currently_playing()['item']['name'])
