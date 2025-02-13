@@ -33,6 +33,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     global refresh
     global tic
     global toc
+    global new_user
     lenght = max(len(text1),len(text2))
     if refresh == True:
         refresh = False
@@ -69,7 +70,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
             display.lcd_display_string(text2, 2)    
     else:
         display.lcd_display_extended_string(line=1,string="Pozastaveno {0x01}   ")
-        display.lcd_display_string(text1[:num_cols], 2)
+        long_string(new_user, 2)
     return refresh
 def diakritika(string=str):
     prevod = [['á','a'],
