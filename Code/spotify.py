@@ -248,7 +248,7 @@ while not io.input(26):
             
             if new_instance:
                 new_instance = False
-                new_user = sp.current_user()['display_name']
+                new_user = diakritika(sp.current_user()['display_name'])
                 new_user = (new_user+"                ")[:16]
                 display.lcd_display_string("Prihlasen jako: ", 1)
                 display.lcd_display_string(new_user,2)
