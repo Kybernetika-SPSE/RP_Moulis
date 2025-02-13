@@ -219,6 +219,7 @@ toc = 0.0
 screen = 17
 interpret = ""
 hraje = ""
+new_instance = False
 io.setmode(io.BCM)
 io.setup(screen, io.OUT)
 io.setup(26, io.IN, pull_up_down=io.PUD_UP)
@@ -253,6 +254,15 @@ while not io.input(26):
                 io.output(screen, False)
                 vol_set = 0
             
+            if new_instance:
+                new_instance = False
+                new_user = sp.current_user()['display_name']
+                for i in range(0,len(new_user)):
+                    if i >= len(new_user):
+                        new_user = new_user+" " 
+                display.lcd_display_string("Prihlasen jako: ", 1)
+                long_string(new_user, 2)
+
             if(hraje!=diakritika(sp.currently_playing()['item']['name'])):
                 refresh = True
                 print("New song")
@@ -272,6 +282,7 @@ while not io.input(26):
         print(Te)
         display.lcd_display_extended_string(line=1,string="Poastaveno {0x01}     ")
         display.lcd_display_string("Zadny playback  ", 2)
+        new_instance = True
         
     except OSError:
         sleep(2)
