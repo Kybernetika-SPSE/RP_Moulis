@@ -47,7 +47,10 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
                     text2 = text2+" "
     
     i = int(deltaT)
-    
+    print(i)
+    print(lenght)
+    print(len(text1))
+    print(len(text2))
     if play:
         if(lenght > num_cols):
             if(i*4<len(text1)):
