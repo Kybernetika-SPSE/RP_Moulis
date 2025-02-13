@@ -3,6 +3,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from time import sleep
 import drivers
 from datetime import datetime
+import RPi.GPIO as io
 client_id='5984261fa2d845b3bcf6463bb1df2c97'
 client_secret='9c2280c3c0ae4d9392a8870b90165b91'
 redirect_uri='http://localhost:8888/callback'
@@ -45,7 +46,6 @@ def long_string_both(display, text1='', text2='', num_cols=16):
     else:
         display.lcd_display_string(text1, 1)
         display.lcd_display_string(text2, 2)    
-
 def diakritika(string=str):
     prevod = [['á','a'],
               ['Á','A'],
@@ -87,6 +87,8 @@ def diakritika(string=str):
         string = new
     return string
 
+io.setmode(io.BOARD)
+io.setup(4, io.OUT, pull_up_down=io.PUD_DOWN)
 display = drivers.Lcd()
 cc = drivers.CustomCharacters(display)
 
@@ -190,6 +192,12 @@ while True:
         print("Writing to display")
         #display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
         while True:
+            if(sp.current_playback()['device']['id']==DEVICE_ID):
+                 io.output(4) = io.HIGH
+            else:
+                 io.output(4) = io.LOW
+                 
+
             print(sp.currently_playing()['item']['name'])
             print(sp.currently_playing()['item']['album']['artists'][0]['name'])
             interpret = diakritika(sp.currently_playing()['item']['album']['artists'][0]['name'])

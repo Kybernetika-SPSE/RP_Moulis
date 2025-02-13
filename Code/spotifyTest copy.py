@@ -62,4 +62,4 @@ DEVICE_ID = get_device(device_name)
 print(DEVICE_ID)
 print(sp.currently_playing()['item']['album']['artists'][0]['name'])
 print(diakritika(sp.currently_playing()['item']['name']))
-
+print(sp.current_playback())
