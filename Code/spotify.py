@@ -174,7 +174,7 @@ def customchar():
     cc.load_custom_characters_data()
      
 io.setmode(io.BCM)
-io.setup(4, io.OUT)
+io.setup(4, io.OUT, pull_up_down=io.PUD_DOWN)
 display = drivers.Lcd()
 
 # Spotify Authentication
