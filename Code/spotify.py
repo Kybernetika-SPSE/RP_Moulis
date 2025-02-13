@@ -42,10 +42,14 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     toc = perf_counter()
     deltaT = toc-tic
     
+    for i in range(0,16):
+                if i >= len(interpret):
+                    interpret = interpret+" "
+                if i >= len(hraje):
+                    hraje = hraje+" "
     
     i = int(deltaT)
-    print(lenght)
-    print(i)
+    
     if play:
         if(lenght > num_cols):
             if(i*4<len(text1)):
@@ -239,8 +243,7 @@ while not io.input(26):
             else:
                 io.output(screen, False)
                 vol_set = 0
-            print(hraje)
-            print(diakritika(sp.currently_playing()['item']['name']))
+            
             if(hraje!=diakritika(sp.currently_playing()['item']['name'])):
                 refresh = True
                 print("New song")
@@ -251,11 +254,6 @@ while not io.input(26):
 
             interpret = diakritika(sp.currently_playing()['item']['album']['artists'][0]['name'])
             hraje = diakritika(sp.currently_playing()['item']['name'])
-            for i in range(0,16):
-                if i >= len(interpret):
-                    interpret = interpret+" "
-                if i >= len(hraje):
-                    hraje = hraje+" "
             long_string_both(display,hraje,interpret,playing)
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
