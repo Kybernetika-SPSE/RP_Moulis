@@ -272,6 +272,8 @@ while not io.input(26):
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
         break
     except TypeError as Te:
+        io.cleanup()
+        sleep(1)
         print(Te)
         io.output(screen, True)
         display.lcd_display_string("Chyba pri init  ",1)
