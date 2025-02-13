@@ -239,7 +239,8 @@ while not io.input(26):
             else:
                 io.output(screen, False)
                 vol_set = 0
-                
+            print(hraje)
+            print(diakritika(sp.currently_playing()['item']['name']))
             if(hraje!=diakritika(sp.currently_playing()['item']['name'])):
                 refresh = True
                 print("New song")
