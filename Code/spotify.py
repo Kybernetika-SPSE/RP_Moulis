@@ -53,11 +53,15 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     print(len(text1))
     print(len(text2))
     if play:
-        if(lenght > num_cols):
+        if(text1 > num_cols):
             if(i*4<len(text1)):
                 display.lcd_display_string(text1[i*4:num_cols+i*4+1], 1)
             else:  
                 display.lcd_display_string(text1[len(text1)-num_cols:len(text1)], 1)
+        else:
+            display.lcd_display_string(text1, 1)
+
+        if(text2 > num_cols):    
             if(i*4<len(text2)):
                 display.lcd_display_string(text2[i*4:num_cols+i*4+1], 2)
             else:  
@@ -65,9 +69,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
             if(i*4>lenght+4):
                  refresh = True
                  print("refresh")
-            
         else:
-            display.lcd_display_string(text1, 1)  
             display.lcd_display_string(text2, 2)    
     else:
         display.lcd_display_extended_string(line=1,string="Pozastaveno {0x01}   ")
