@@ -235,9 +235,11 @@ customchar()
 while not io.input(26):
     try:
         print("Writing to display")
-        #display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
+        print(type(sp.current_playback()))
+        if(type(sp.current_playback)=='NoneType'):
+             print("checked")
         while not io.input(26):
-            print(type(sp.current_playback()))
+            
             if(sp.current_playback()['device']['id']==DEVICE_ID):
                 if(vol_set == 0):
                     sp.volume(100,DEVICE_ID)
