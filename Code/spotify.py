@@ -59,7 +59,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     print(text2[len(text2)-num_cols:len(text2)])
     if play:
         if(len(text1) > num_cols):
-            if(i*4<len(text1)):
+            if(i*4<len(text1)-num_cols):
                 display.lcd_display_string(text1[i*4:num_cols+i*4+1], 1)
             else:  
                 display.lcd_display_string(text1[len(text1)-num_cols:len(text1)], 1)
@@ -67,7 +67,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
             display.lcd_display_string(text1, 1)
 
         if(len(text2) > num_cols):    
-            if(i*4<len(text2)):
+            if(i*4<len(text2)-num_cols):
                 display.lcd_display_string(text2[i*4:num_cols+i*4+1], 2)
             else:  
                 display.lcd_display_string(text2[len(text2)-num_cols:len(text2)], 2)
