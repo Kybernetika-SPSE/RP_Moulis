@@ -48,21 +48,22 @@ def long_string_both(display, text1='', text2='', play, num_cols=16):
         refresh = False
         display_temp = 0
     display_temp += refresh_period
-    if lenght > num_cols:
-        if(display_temp<=1):
-            display.lcd_display_string(text1[:num_cols], 1)
-            display.lcd_display_string(text2[:num_cols], 2)
-        if(display_temp>1 and display_temp <= 1+lenght*refresh_period):
-            i = (display_temp - 1)/refresh_period 
-            if(len(text1) - num_cols >= i):
-                display.lcd_display_string(text1[i:i+num_cols], 1)
-            if(len(text2) - num_cols >= i):
-                display.lcd_display_string(text2[i:i+num_cols], 2)
-        if(display_temp>1+lenght*refresh_period+1):
-            display_temp = 0    
-    else:
-        display.lcd_display_string(text1, 1)
-        display.lcd_display_string(text2, 2)    
+    if play:
+        if lenght > num_cols:
+            if(display_temp<=1):
+                display.lcd_display_string(text1[:num_cols], 1)
+                display.lcd_display_string(text2[:num_cols], 2)
+            if(display_temp>1 and display_temp <= 1+lenght*refresh_period):
+                i = (display_temp - 1)/refresh_period 
+                if(len(text1) - num_cols >= i):
+                    display.lcd_display_string(text1[i:i+num_cols], 1)
+                if(len(text2) - num_cols >= i):
+                    display.lcd_display_string(text2[i:i+num_cols], 2)
+            if(display_temp>1+lenght*refresh_period+1):
+                display_temp = 0    
+        else:
+            display.lcd_display_string(text1, 1)
+            display.lcd_display_string(text2, 2)    
 
 
 def diakritika(string=str):
@@ -237,7 +238,7 @@ while not io.input(26):
                     interpret = interpret+" "
                 if i >= len(hraje):
                     hraje = hraje+" "
-            long_string_both(display,interpret,hraje, playing)
+            long_string_both(display,interpret,hraje,playing)
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
         
