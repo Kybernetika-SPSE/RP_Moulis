@@ -178,9 +178,9 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret
 
 #device = sp.devices()[]
 DEVICE_ID = get_device(device_name)
-if(DEVICE_ID!=""):
-    sp.transfer_playback(DEVICE_ID,True)
-    sp.volume(100,DEVICE_ID)
+#if(DEVICE_ID!=""):
+    #sp.transfer_playback(DEVICE_ID,True)
+    #sp.volume(100,DEVICE_ID)
 
 
 
@@ -193,9 +193,11 @@ while True:
         #display.lcd_display_extended_string("Pr{0x00}v{0x01} hraje:", 1)  # Write line of text to first line of display
         while True:
             if(sp.current_playback()['device']['id']==DEVICE_ID):
-                 io.output(4) = io.HIGH
-            else:
-                 io.output(4) = io.LOW
+                sp.volume(100,DEVICE_ID)
+                if sp.current_playback()['is_playing']==True:
+                    io.output(4) = io.HIGH
+                else:
+                    io.output(4) = io.LOW
                  
 
             print(sp.currently_playing()['item']['name'])

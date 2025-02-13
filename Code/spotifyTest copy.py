@@ -47,7 +47,7 @@ def diakritika(string=str):
     return string
 def get_device(name):
     device = sp.devices()['devices']
-    print(device)
+    #print(device)
     out = ""
     for i in range(0,len(device)):
         if(device[i]['name']==name):
@@ -59,7 +59,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret
 
 DEVICE_ID = get_device(device_name)
 # Import necessary libraries for communication and display use
-print(DEVICE_ID)
-print(sp.currently_playing()['item']['album']['artists'][0]['name'])
-print(diakritika(sp.currently_playing()['item']['name']))
-print(sp.current_playback())
+#print(DEVICE_ID)
+#print(sp.currently_playing()['item']['album']['artists'][0]['name'])
+#print(diakritika(sp.currently_playing()['item']['name']))
+print(sp.current_playback()['is_playing'])
