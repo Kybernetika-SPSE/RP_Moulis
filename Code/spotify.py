@@ -43,10 +43,10 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     deltaT = toc-tic
     
     for i in range(0,16):
-                if i >= len(interpret):
-                    interpret = interpret+" "
-                if i >= len(hraje):
-                    hraje = hraje+" "
+                if i >= len(text1):
+                    text1 = text1+" "
+                if i >= len(text2):
+                    text2 = text2+" "
     
     i = int(deltaT)
     
