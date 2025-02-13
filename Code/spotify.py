@@ -36,14 +36,15 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     lenght = max(len(text1),len(text2))
     if refresh == True:
         refresh = False
+        print("refresh")
         tic = perf_counter()
     toc = perf_counter()
     deltaT = toc-tic
     
-    for i in range(0,16):
-                if i >= len(text1):
+    for j in range(0,16):
+                if j >= len(text1):
                     text1 = text1+" "
-                if i >= len(text2):
+                if j >= len(text2):
                     text2 = text2+" "
     
     i = int(deltaT)
@@ -72,8 +73,8 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
             else:  
                 display.lcd_display_string(text2[len(text2)-num_cols:len(text2)], 2)
             if(i*4>lenght+4):
-                 refresh = True
-                 print("refresh")
+                refresh = True
+                
         else:
             display.lcd_display_string(text2, 2)    
     else:
