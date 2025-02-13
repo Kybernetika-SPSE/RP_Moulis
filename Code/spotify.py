@@ -236,8 +236,14 @@ while not io.input(26):
     try:
         print("Writing to display")
         print(type(sp.current_playback()))
-        if(type(sp.current_playback)=='NoneType'):
+        if(sp.current_playback is None):
              print("checked")
+             while not io.input(26):
+                io.output(screen, True)
+                display.lcd_display_string("Chyba pri init  ",1)
+                display.lcd_display_string("Pripojte ucet   ", 2)
+
+        io.output(screen, False)
         while not io.input(26):
             
             if(sp.current_playback()['device']['id']==DEVICE_ID):
