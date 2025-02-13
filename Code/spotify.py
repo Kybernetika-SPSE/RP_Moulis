@@ -44,6 +44,8 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     
     
     i = int(deltaT)
+    print(lenght)
+    print(i)
     if play:
         if(lenght > num_cols):
             if(i*4<len(text1)):
@@ -61,7 +63,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
             display.lcd_display_string(text1, 1)  
             display.lcd_display_string(text2, 2)    
     else:
-        display.lcd_display_extended_string(line=1,string="Pozastaveno {0x01}")
+        display.lcd_display_extended_string(line=1,string="Pozastaveno {0x01}   ")
         display.lcd_display_string(text2[:num_cols], 2)
     return refresh
 
@@ -252,7 +254,7 @@ while not io.input(26):
                     interpret = interpret+" "
                 if i >= len(hraje):
                     hraje = hraje+" "
-            long_string_both(display,interpret,hraje,playing)
+            long_string_both(display,hraje,interpret,playing)
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
         
