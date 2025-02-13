@@ -60,7 +60,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
             if(deltaT>lenght*refresh_period+2*refresh_hold):
                 refresh = True  
         else:
-            display.lcd_display_string(text1, 2)  
+            display.lcd_display_string(text1, 1)  
             display.lcd_display_string(text2, 2)    
     else:
         display.lcd_display_extended_string("Pozastaveno {0x01}")
