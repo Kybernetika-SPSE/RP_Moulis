@@ -8,7 +8,15 @@ client_id='5984261fa2d845b3bcf6463bb1df2c97'
 client_secret='9c2280c3c0ae4d9392a8870b90165b91'
 redirect_uri='http://localhost:8888/callback'
 device_name = 'RPI'
-
+vol_set = 0
+refresh = True
+playing = True
+display_temp = 0
+refresh_period = 0,2
+screen = 17
+io.setmode(io.BCM)
+io.setup(screen, io.OUT)
+io.setup(26, io.IN, pull_up_down=io.PUD_UP)
 
 def get_device(name):
     device = sp.devices()['devices']
@@ -32,22 +40,31 @@ def long_string(display, text='', num_line=1, num_cols=16):
 			sleep(1)
 		else:
 			display.lcd_display_string(text, num_line)  
-def long_string_both(display, text1='', text2='', num_cols=16):
+
+
+def long_string_both(display, text1='', text2='', play, num_cols=16):
     lenght = max(len(text1),len(text2))
+    if refresh == True:
+        refresh = False
+        display_temp = 0
+    display_temp += refresh_period
     if lenght > num_cols:
-        display.lcd_display_string(text1[:num_cols], 1)
-        display.lcd_display_string(text2[:num_cols], 2)
-        sleep(1)
-        for i in range(lenght - num_cols + 1):
+        if(display_temp<=1):
+            display.lcd_display_string(text1[:num_cols], 1)
+            display.lcd_display_string(text2[:num_cols], 2)
+        if(display_temp>1 and display_temp <= 1+lenght*refresh_period):
+            i = (display_temp - 1)/refresh_period 
             if(len(text1) - num_cols >= i):
                 display.lcd_display_string(text1[i:i+num_cols], 1)
             if(len(text2) - num_cols >= i):
                 display.lcd_display_string(text2[i:i+num_cols], 2)
-            sleep(0.2)
-        sleep(1)    
+        if(display_temp>1+lenght*refresh_period+1):
+            display_temp = 0    
     else:
         display.lcd_display_string(text1, 1)
         display.lcd_display_string(text2, 2)    
+
+
 def diakritika(string=str):
     prevod = [['á','a'],
               ['Á','A'],
@@ -93,23 +110,23 @@ def customchar():
 
     # Redefine the default characters:
     # Custom caracter #1. Code {0x00}.
-    cc.char_1_data = ["00010",
-                    "00100",
-                    "01110",
-                    "00001",
-                    "01111",
-                    "10001",
-                    "01111",
+    cc.char_1_data = ["00000",
+                    "10000",
+                    "11100",
+                    "11111",
+                    "11111",
+                    "11100",
+                    "10000",
                     "00000"]
 
     # Custom caracter #2. Code {0x01}.
-    cc.char_2_data = ["01010",
-                    "00100",
-                    "01110",
-                    "10001",
-                    "11111",
-                    "10000",
-                    "01110",
+    cc.char_2_data = ["00000",
+                    "01001",
+                    "01001",
+                    "01001",
+                    "01001",
+                    "01001",
+                    "01001",
                     "00000"]
 
     # Custom caracter #3. Code {0x02}.
@@ -184,15 +201,11 @@ print(DEVICE_ID)
 #if(DEVICE_ID!=""):
     #sp.transfer_playback(DEVICE_ID,True)
     #sp.volume(100,DEVICE_ID)
-vol_set = 0
+
 
 #uncoment when using custom characters
-#customchar()
+customchar()
 
-screen = 17
-io.setmode(io.BCM)
-io.setup(screen, io.OUT)
-io.setup(26, io.IN, pull_up_down=io.PUD_UP)
 
 while not io.input(26):
     try:
@@ -211,6 +224,12 @@ while not io.input(26):
             
             print(sp.currently_playing()['item']['name'])
             print(sp.currently_playing()['item']['album']['artists'][0]['name'])
+            
+            if(interpret!=diakritika(sp.currently_playing()['item']['album']['artists'][0]['name']) or hraje!=diakritika(sp.currently_playing()['item']['name'])):
+                refresh = True
+
+            playing = sp.current_playback()['is_playing']
+
             interpret = diakritika(sp.currently_playing()['item']['album']['artists'][0]['name'])
             hraje = diakritika(sp.currently_playing()['item']['name'])
             for i in range(0,16):
@@ -218,7 +237,7 @@ while not io.input(26):
                     interpret = interpret+" "
                 if i >= len(hraje):
                     hraje = hraje+" "
-            long_string_both(display,interpret,hraje)
+            long_string_both(display,interpret,hraje, playing)
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
         
