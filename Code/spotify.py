@@ -4,21 +4,7 @@ from time import sleep
 import drivers
 from datetime import datetime
 import RPi.GPIO as io
-client_id='5984261fa2d845b3bcf6463bb1df2c97'
-client_secret='9c2280c3c0ae4d9392a8870b90165b91'
-redirect_uri='http://localhost:8888/callback'
-device_name = 'RPI'
-vol_set = 0
-refresh = True
-playing = True
-display_temp = 0.0
-refresh_period = 0.2
-screen = 17
-interpret = ""
-hraje = ""
-io.setmode(io.BCM)
-io.setup(screen, io.OUT)
-io.setup(26, io.IN, pull_up_down=io.PUD_UP)
+
 
 def get_device(name):
     device = sp.devices()['devices']
@@ -44,7 +30,7 @@ def long_string(display, text='', num_line=1, num_cols=16):
 			display.lcd_display_string(text, num_line)  
 
 
-def long_string_both(display, text1='', text2='', play=True, refresh = True, num_cols=16):
+def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     lenght = max(len(text1),len(text2))
     if refresh == True:
         refresh = False
@@ -193,6 +179,22 @@ def customchar():
                     "11111"]
     cc.load_custom_characters_data()
 
+
+client_id='5984261fa2d845b3bcf6463bb1df2c97'
+client_secret='9c2280c3c0ae4d9392a8870b90165b91'
+redirect_uri='http://localhost:8888/callback'
+device_name = 'RPI'
+vol_set = 0
+refresh = True
+playing = True
+display_temp = 0.0
+refresh_period = 0.2
+screen = 17
+interpret = ""
+hraje = ""
+io.setmode(io.BCM)
+io.setup(screen, io.OUT)
+io.setup(26, io.IN, pull_up_down=io.PUD_UP)
 display = drivers.Lcd()
 
 # Spotify Authentication
@@ -241,7 +243,7 @@ while not io.input(26):
                     interpret = interpret+" "
                 if i >= len(hraje):
                     hraje = hraje+" "
-            refresh = long_string_both(display,interpret,hraje,playing, refresh)
+            long_string_both(display,interpret,hraje,playing)
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
         
