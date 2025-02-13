@@ -44,7 +44,7 @@ def long_string(display, text='', num_line=1, num_cols=16):
 			display.lcd_display_string(text, num_line)  
 
 
-def long_string_both(display, text1='', text2='', play=True, num_cols=16):
+def long_string_both(display, text1='', text2='', play=True, refresh = True, num_cols=16):
     lenght = max(len(text1),len(text2))
     if refresh == True:
         refresh = False
@@ -66,7 +66,7 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
         else:
             display.lcd_display_string(text1, 1)
             display.lcd_display_string(text2, 2)    
-
+    return refresh
 
 def diakritika(string=str):
     prevod = [['á','a'],
@@ -241,7 +241,7 @@ while not io.input(26):
                     interpret = interpret+" "
                 if i >= len(hraje):
                     hraje = hraje+" "
-            long_string_both(display,interpret,hraje,playing)
+            refresh = long_string_both(display,interpret,hraje,playing, refresh)
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
         
