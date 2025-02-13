@@ -174,7 +174,7 @@ def customchar():
     cc.load_custom_characters_data()
 screen = 17
 io.setmode(io.BCM)
-io.cleanup(screen)
+
 io.setup(screen, io.OUT)
 display = drivers.Lcd()
 
@@ -226,6 +226,7 @@ while True:
     except KeyboardInterrupt:
         # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
         print("Cleaning up!")
+        io.cleanup()
         display.lcd_clear()
         break
     except OSError:
