@@ -39,13 +39,15 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
         refresh = False
         display_temp = 0
     display_temp += refresh_period
+    i = int((display_temp - 1)/refresh_period)
     if play:
+        
         if lenght > num_cols:
             if(display_temp<=1):
                 display.lcd_display_string(text1[:num_cols], 1)
                 display.lcd_display_string(text2[:num_cols], 2)
             if(display_temp>1 and display_temp <= 1+lenght*refresh_period):
-                i = (display_temp - 1)/refresh_period 
+                 
                 if(len(text1) - num_cols >= i):
                     display.lcd_display_string(text1[i:i+num_cols], 1)
                 if(len(text2) - num_cols >= i):
