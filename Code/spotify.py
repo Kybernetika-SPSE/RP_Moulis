@@ -174,6 +174,7 @@ def customchar():
     cc.load_custom_characters_data()
 screen = 17
 io.setmode(io.BCM)
+io.cleanup(screen)
 io.setup(screen, io.OUT)
 display = drivers.Lcd()
 
@@ -204,7 +205,7 @@ while True:
             else:
                 vol_set = 0
                 
-
+            io.cleanup
             io.output(screen,0)
             #io.output(screen, sp.current_playback()['is_playing'])
             
