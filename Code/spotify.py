@@ -1,6 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from time import sleep
+from time import perf_counter
 import drivers
 from datetime import datetime
 import RPi.GPIO as io
@@ -32,31 +33,38 @@ def long_string(display, text='', num_line=1, num_cols=16):
 
 def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     global refresh
-    global display_temp
     global refresh_period
+    global refresh_hold
+    global tic
+    global toc
     lenght = max(len(text1),len(text2))
     if refresh == True:
         refresh = False
-        display_temp = 0
-    display_temp += refresh_period
-    i = int((display_temp - 1)/refresh_period)
+        tic = perf_counter()
+    toc = perf_counter()
+    deltaT = toc-tic
+    
+    
+    i = int((deltaT - refresh_hold)/refresh_period)
     if play:
-        
         if lenght > num_cols:
-            if(display_temp<=1):
+            if(deltaT<=refresh_hold):
                 display.lcd_display_string(text1[:num_cols], 1)
                 display.lcd_display_string(text2[:num_cols], 2)
-            if(display_temp>1 and display_temp <= 1+lenght*refresh_period):
+            if(deltaT>refresh_hold and deltaT <= refresh_hold+lenght*refresh_period):
                  
                 if(len(text1) - num_cols >= i):
                     display.lcd_display_string(text1[i:i+num_cols], 1)
                 if(len(text2) - num_cols >= i):
                     display.lcd_display_string(text2[i:i+num_cols], 2)
-            if(display_temp>1+lenght*refresh_period+1):
-                display_temp = 0    
+            if(deltaT>lenght*refresh_period+2*refresh_hold):
+                refresh = True  
         else:
-            display.lcd_display_string(text1, 1)
+            display.lcd_display_string(text1, 2)  
             display.lcd_display_string(text2, 2)    
+    else:
+        display.lcd_display_extended_string("Pozastaveno {0x01}")
+        display.lcd_display_string(text2[:num_cols], 2)
     return refresh
 
 def diakritika(string=str):
@@ -192,8 +200,10 @@ device_name = 'RPI'
 vol_set = 0
 refresh = True
 playing = True
-display_temp = 0.0
-refresh_period = 0.02
+tic = 0.0
+toc = 0.0
+refresh_period = 0.2
+refresh_hold = 1
 screen = 17
 interpret = ""
 hraje = ""
