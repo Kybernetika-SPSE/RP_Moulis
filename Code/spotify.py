@@ -213,6 +213,7 @@ interpret = ""
 hraje = ""
 new_instance = True
 new_user = ""
+io.setwarnings(False)
 io.setmode(io.BCM)
 io.setup(screen, io.OUT)
 io.setup(26, io.IN, pull_up_down=io.PUD_UP)
