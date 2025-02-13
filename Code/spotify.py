@@ -205,12 +205,9 @@ while True:
                 vol_set = 0
                 
 
-            if sp.current_playback()['is_playing']==True:
-                io.output(4, True)
-                print("screen On")
-            else:
-                io.output(4, False)
-                print("screen OF")
+        
+            io.output(4, sp.current_playback()['is_playing'])
+            
             print(sp.current_playback()['is_playing'])
             print(io.input(4))
 
