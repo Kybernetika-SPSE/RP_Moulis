@@ -249,11 +249,9 @@ while not io.input(26):
             if new_instance:
                 new_instance = False
                 new_user = sp.current_user()['display_name']
-                for i in range(0,len(new_user)):
-                    if i >= len(new_user):
-                        new_user = new_user+" " 
+                new_user = (new_user+"                ")[:16]
                 display.lcd_display_string("Prihlasen jako: ", 1)
-                long_string(new_user, 2)
+                display.lcd_display_string(new_user,2)
                 sleep(2)
 
             if(hraje!=diakritika(sp.currently_playing()['item']['name'])):
