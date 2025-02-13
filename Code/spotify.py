@@ -203,16 +203,12 @@ while not io.input(26):
                 if(vol_set == 0):
                     sp.volume(100,DEVICE_ID)
                     vol_set = 1
+                io.output(screen, True)
             else:
+                io.output(screen, False)
                 vol_set = 0
                 
             
-            io.output(screen, False)
-            
-            print(sp.current_playback()['is_playing'])
-            #print(io.input(screen))
-
-
             print(sp.currently_playing()['item']['name'])
             print(sp.currently_playing()['item']['album']['artists'][0]['name'])
             interpret = diakritika(sp.currently_playing()['item']['album']['artists'][0]['name'])
