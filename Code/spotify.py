@@ -284,7 +284,7 @@ while not io.input(26):
         print(Te)
         io.setmode(io.BCM)
         io.setup(screen, io.OUT)
-        io.output(screen, True)
+        io.output(screen, False)
         io.setup(26, io.IN, pull_up_down=io.PUD_UP)
         display.lcd_display_string("Chyba pri init  ",1)
         display.lcd_display_string("Pripojte ucet   ", 2)
