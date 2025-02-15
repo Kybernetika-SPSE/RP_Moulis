@@ -241,8 +241,11 @@ while not io.input(26):
             
             if(sp.current_playback()['device']['id']==DEVICE_ID or DEVICE_ID == ""):
                 if(vol_set == 0):
-                    sp.volume(100,DEVICE_ID)
-                    vol_set = 1
+                    try:
+                        sp.volume(100,DEVICE_ID)
+                        vol_set = 1
+                    except:
+                        print("couldnt set volume")
                 io.output(screen, True)
                 print("on")
             else:

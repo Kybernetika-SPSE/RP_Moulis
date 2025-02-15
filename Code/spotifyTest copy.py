@@ -68,4 +68,4 @@ try:
 except TypeError as Te:
     if Te == "'NoneType' object is not subscriptable":
         print("koule2")
-print(sp.current_user()['display_name'])
+print(sp.current_playback())
