@@ -273,12 +273,15 @@ while not io.input(26):
             if(sp.current_playback()['device']['id']!=DEVICE_ID):
                 io.output(screen, False)
                 vol_set = False
+                print("off, due to device != DEVICE_ID")
             else:
                 io.output(screen, True)
+                print("on, due to device == DEVICE_ID")
             
             
             if new_instance:
                 io.output(screen, True)
+                print("on, due to new instance")
                 new_instance = False
                 new_user = diakritika(sp.current_user()['display_name'])
                 new_user = (new_user+"                ")[:16]
@@ -308,6 +311,7 @@ while not io.input(26):
         io.setmode(io.BCM)
         io.setup(screen, io.OUT)
         io.output(screen, False)
+        print("off, due to typeerror")
         io.setup(26, io.IN, pull_up_down=io.PUD_UP)
         display.lcd_display_string("Chyba pri init  ",1)
         display.lcd_display_string("Pripojte ucet   ", 2)
