@@ -64,8 +64,56 @@ DEVICE_ID = get_device(device_name)
 #print(diakritika(sp.currently_playing()['item']['name']))
 print("koule")
 try:
+    print(DEVICE_ID)
     print(sp.current_playback()['is_playing'])
 except TypeError as Te:
     if Te == "'NoneType' object is not subscriptable":
         print("koule2")
-print(sp.current_playback())
+print(sp.current_playback()["progress_ms"])
+print(sp.current_playback()["item"]["duration_ms"])
+
+
+def long_string_both(display, text1='', text2='', play=True, num_cols=16):
+    global refresh
+    global tic
+    global toc
+    global new_user
+    lenght = max(len(text1),len(text2))
+    if refresh == True:
+        refresh = False
+        print("refresh")
+        tic = perf_counter()
+    toc = perf_counter()
+    deltaT = toc-tic
+    percent = get_percent()
+    for j in range(0,16):
+                if j >= len(text1):
+                    text1 = text1+" "
+                if j >= len(text2):
+                    text2 = text2+" "
+    
+    i = int(deltaT)
+    if play:
+        if(len(text1) > num_cols):
+            if(i*4<len(text1)-num_cols):
+                display.lcd_display_string(text1[i*4:num_cols+i*4+1], 1)
+            else:  
+                display.lcd_display_string(text1[len(text1)-num_cols:len(text1)], 1)
+        else:
+            display.lcd_display_string(text1, 1)
+
+        if(len(text2) > num_cols):    
+            if(i*4<len(text2)-num_cols):
+                display.lcd_display_string(text2[i*4:num_cols+i*4+1], 2)
+            else:  
+                display.lcd_display_string(text2[len(text2)-num_cols:len(text2)], 2)
+        if(i*4>lenght+4):
+            refresh = True
+                
+        else:
+            display.lcd_display_string(text2, 2)    
+    else:
+        display.lcd_display_extended_string(line=1,string="Pozastaveno {0x01}   ")
+        display.lcd_display_string(new_user, 2)
+    return refresh
+

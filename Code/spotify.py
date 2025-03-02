@@ -30,12 +30,16 @@ def long_string(display, text='', num_line=1, num_cols=16):
 			sleep(1)
 		else:
 			display.lcd_display_string(text, num_line)  
-def long_string_both(display, text1='', text2='', play=True, num_cols=16):
+def long_string_both(display, hraje='', interpret='', play=True, num_cols=16):
     global refresh
     global tic
     global toc
     global new_user
-    lenght = max(len(text1),len(text2))
+    global was_playing
+    if play != was_playing:
+        was_playing = play
+        refresh = True
+
     if refresh == True:
         refresh = False
         print("refresh")
@@ -43,35 +47,45 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
     toc = perf_counter()
     deltaT = toc-tic
     
+    progress = max(int(100*sp.current_playback()["item"]["duration_ms"]/sp.current_playback()["progress_ms"]),96)
     for j in range(0,16):
-                if j >= len(text1):
-                    text1 = text1+" "
-                if j >= len(text2):
-                    text2 = text2+" "
+                if j >= len(hraje):
+                    hraje = hraje+" "
+                if j >= len(interpret):
+                    interpret = interpret+" "
     
     i = int(deltaT)
     if play:
-        if(len(text1) > num_cols):
-            if(i*4<len(text1)-num_cols):
-                display.lcd_display_string(text1[i*4:num_cols+i*4+1], 1)
+        if(len(hraje) > num_cols):
+            if(i*4<len(hraje)-num_cols):
+                display.lcd_display_string(hraje[i*4:num_cols+i*4+1], 1)
             else:  
-                display.lcd_display_string(text1[len(text1)-num_cols:len(text1)], 1)
+                display.lcd_display_string(hraje[len(hraje)-num_cols:len(hraje)], 1)
         else:
-            display.lcd_display_string(text1, 1)
-
-        if(len(text2) > num_cols):    
-            if(i*4<len(text2)-num_cols):
-                display.lcd_display_string(text2[i*4:num_cols+i*4+1], 2)
-            else:  
-                display.lcd_display_string(text2[len(text2)-num_cols:len(text2)], 2)
-        if(i*4>lenght+4):
+            display.lcd_display_string(hraje, 1)
+        if(i*4>len(hraje)+4):
             refresh = True
+        symbol = ["{0x06}","{0x05}","{0x04}","{0x03}","{0x02}","{0x01}"]
+        progress_msg = ""
+        progress_index = int(progress/6)
+        for j in range(16):
+            if(j<progress_index):
+                progress_msg = progress_msg+"{0x01}"
+            if(j==progress_index):
+                progress_msg = progress_msg+symbol[progress-(j*6)]
+            if(j>progress_index):
+                progress_msg = progress_msg+"{0x06}"
+             
+        display.lcd_display_extended_string(line=2,string = progress_msg)
                 
-        else:
-            display.lcd_display_string(text2, 2)    
+      
     else:
-        display.lcd_display_extended_string(line=1,string="Pozastaveno {0x01}   ")
-        display.lcd_display_string(new_user, 2)
+        display.lcd_display_extended_string(line=1,string="Pozastaveno {0x00}   ")
+        if(len(interpret) > num_cols):    
+            if(i*4<len(interpret)-num_cols):
+                display.lcd_display_string(interpret[i*4:num_cols+i*4+1], 2)
+            else:  
+                display.lcd_display_string(interpret[len(interpret)-num_cols:len(interpret)], 2)
     return refresh
 def diakritika(string=str):
     prevod = [['á','a'],
@@ -114,98 +128,101 @@ def diakritika(string=str):
         string = new
     return string
 def customchar():
+    global cc
     cc = drivers.CustomCharacters(display)
 
     # Redefine the default characters:
     # Custom caracter #1. Code {0x00}.
     cc.char_1_data = ["00000",
-                    "10000",
-                    "11100",
-                    "11111",
-                    "11111",
-                    "11100",
-                    "10000",
+                    "01001",
+                    "01001",
+                    "01001",
+                    "01001",
+                    "01001",
+                    "01001",
                     "00000"]
 
     # Custom caracter #2. Code {0x01}.
-    cc.char_2_data = ["00000",
-                    "01001",
-                    "01001",
-                    "01001",
-                    "01001",
-                    "01001",
-                    "01001",
-                    "00000"]
+    cc.char_2_data = ["11111",
+                    "11111",
+                    "11111",
+                    "11111",
+                    "11111",
+                    "11111",
+                    "11111",
+                    "11111"]
 
     # Custom caracter #3. Code {0x02}.
-    cc.char_3_data = ["10001",
-                    "10001",
-                    "10001",
-                    "11111",
-                    "11111",
-                    "11111",
-                    "11111",
-                    "11111"]
+    cc.char_3_data = ["10000",
+                    "10000",
+                    "10000",
+                    "10000",
+                    "10000",
+                    "10000",
+                    "10000",
+                    "10000"]
 
     # Custom caracter #4. Code {0x03}.
-    cc.char_4_data = ["11111",
-                    "11011",
-                    "10001",
-                    "10001",
-                    "10001",
-                    "10001",
-                    "11011",
-                    "11111"]
+    cc.char_4_data = ["11000",
+                    "11000",
+                    "11000",
+                    "11000",
+                    "11000",
+                    "11000",
+                    "11000",
+                    "11000"]
 
     # Custom caracter #5. Code {0x04}.
-    cc.char_5_data = ["00000",
-                    "00000",
-                    "11011",
-                    "11011",
-                    "00000",
-                    "10001",
-                    "01110",
-                    "00000"]
+    cc.char_5_data = ["11100",
+                    "11100",
+                    "11100",
+                    "11100",
+                    "11100",
+                    "11100",
+                    "11100",
+                    "11100"]
 
     # Custom caracter #6. Code {0x05}.
-    cc.char_6_data = ["01010",
-                    "11111",
-                    "11111",
-                    "01110",
-                    "00100",
+    cc.char_6_data = ["11110",
+                    "11110",
+                    "11110",
+                    "11110",
+                    "11110",
+                    "11110",
+                    "11110",
+                    "11110"]
+
+    # Custom caracter #7. Code {0x06}.
+    cc.char_7_data = ["00000",
+                    "00000",
+                    "00000",
+                    "00000",
+                    "00000",
                     "00000",
                     "00000",
                     "00000"]
 
-    # Custom caracter #7. Code {0x06}.
-    cc.char_7_data = ["11111",
-                    "11011",
-                    "10001",
-                    "10101",
-                    "10101",
-                    "10101",
-                    "11011",
-                    "11111"]
-
     # Custom caracter #8. Code {0x07}.
-    cc.char_8_data = ["11111",
-                    "10001",
-                    "11111",
+    cc.char_8_data = ["00000",
                     "00000",
                     "00000",
-                    "11111",
-                    "10001",
-                    "11111"]
+                    "00000",
+                    "00000",
+                    "00000",
+                    "00000",
+                    "00000"]
     cc.load_custom_characters_data()
 
+    
 
 client_id='5984261fa2d845b3bcf6463bb1df2c97'
 client_secret='9c2280c3c0ae4d9392a8870b90165b91'
 redirect_uri='http://localhost:8888/callback'
 device_name = 'RPI'
-vol_set = 0
+vol_set = False
 refresh = True
 playing = True
+was_playing = True
 tic = 0.0
 toc = 0.0
 screen = 17
@@ -238,24 +255,23 @@ while not io.input(26):
     try:
         print("Writing to display")
         while not io.input(26):
-            
-            if(sp.current_playback()['device']['id']==DEVICE_ID or DEVICE_ID == ""):
-                if(vol_set == 0):
-                    try:
-                        sp.volume(100,DEVICE_ID)
-                        vol_set = 1
-                    except:
-                        print("couldnt set volume")
-                io.output(screen, True)
-                print("on")
-            else:
-                io.output(screen, False)
-                vol_set = 0
-                print("off")
-            if(DEVICE_ID == ""):
+            if(not vol_set):
                 DEVICE_ID = get_device(device_name)
                 print(DEVICE_ID)
+                if(sp.current_playback()['device']['id']==DEVICE_ID and DEVICE_ID != ""):
+                    try:
+                        sp.volume(100,DEVICE_ID)
+                        vol_set = True
+                    except:
+                        print("couldnt set volume")
+                
+            if(sp.current_playback()['device']['id']!=DEVICE_ID):
+                io.output(screen, False)
+                vol_set = False
+            
+            
             if new_instance:
+                io.output(screen, True)
                 new_instance = False
                 new_user = diakritika(sp.current_user()['display_name'])
                 new_user = (new_user+"                ")[:16]
