@@ -117,3 +117,16 @@ def long_string_both(display, text1='', text2='', play=True, num_cols=16):
         display.lcd_display_string(new_user, 2)
     return refresh
 
+progress = min(int(100*sp.current_playback()["progress_ms"])/sp.current_playback()["item"]["duration_ms"],96)
+symbol = ["{0x06}","{0x05}","{0x04}","{0x03}","{0x02}","{0x01}"]
+progress_msg = ""
+progress_index = int(progress/6)
+
+for j in range(16):
+    print(str(j)+", "+str(progress_index))
+    if(j<progress_index):
+        progress_msg = progress_msg+"{0x01}"
+    if(j==progress_index):
+        progress_msg = progress_msg+symbol[int(progress)-(j*6)]
+    if(j>progress_index):
+        progress_msg = progress_msg+"{0x06}"

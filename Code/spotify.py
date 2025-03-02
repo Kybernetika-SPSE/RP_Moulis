@@ -47,7 +47,7 @@ def long_string_both(display, hraje='', interpret='', play=True, num_cols=16):
     toc = perf_counter()
     deltaT = toc-tic
     
-    progress = max(int(100*sp.current_playback()["item"]["duration_ms"]/sp.current_playback()["progress_ms"]),96)
+    progress = min(int(100*sp.current_playback()["progress_ms"])/sp.current_playback()["item"]["duration_ms"],96)
     for j in range(0,16):
                 if j >= len(hraje):
                     hraje = hraje+" "
@@ -72,7 +72,7 @@ def long_string_both(display, hraje='', interpret='', play=True, num_cols=16):
             if(j<progress_index):
                 progress_msg = progress_msg+"{0x01}"
             if(j==progress_index):
-                progress_msg = progress_msg+symbol[progress-(j*6)]
+                progress_msg = progress_msg+symbol[int(progress)-(j*6)]
             if(j>progress_index):
                 progress_msg = progress_msg+"{0x06}"
              
@@ -86,6 +86,8 @@ def long_string_both(display, hraje='', interpret='', play=True, num_cols=16):
                 display.lcd_display_string(interpret[i*4:num_cols+i*4+1], 2)
             else:  
                 display.lcd_display_string(interpret[len(interpret)-num_cols:len(interpret)], 2)
+        if(i*4>len(hraje)+4):
+            refresh = True
     return refresh
 def diakritika(string=str):
     prevod = [['á','a'],
