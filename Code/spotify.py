@@ -8,6 +8,11 @@ import RPi.GPIO as io
 sleep(5)
 print("started")
 
+client_id='5984261fa2d845b3bcf6463bb1df2c97'
+client_secret='9c2280c3c0ae4d9392a8870b90165b91'
+redirect_uri='http://localhost:8888/callback'
+device_name = 'RPI'
+
 def get_device(name):
     device = sp.devices()['devices']
     out = ""
@@ -81,12 +86,14 @@ def long_string_both(display, hraje='', interpret='', play=True, num_cols=16):
       
     else:
         display.lcd_display_extended_string(line=1,string="Pozastaveno {0x00}   ")
-        if(len(interpret) > num_cols):    
+        if(len(interpret) > num_cols):
             if(i*4<len(interpret)-num_cols):
                 display.lcd_display_string(interpret[i*4:num_cols+i*4+1], 2)
             else:  
                 display.lcd_display_string(interpret[len(interpret)-num_cols:len(interpret)], 2)
-        if(i*4>len(hraje)+4):
+        else:
+            display.lcd_display_string(interpret, 2)
+        if(i*4>len(interpret)+4):
             refresh = True
     return refresh
 def diakritika(string=str):
@@ -217,10 +224,6 @@ def customchar():
 
     
 
-client_id='5984261fa2d845b3bcf6463bb1df2c97'
-client_secret='9c2280c3c0ae4d9392a8870b90165b91'
-redirect_uri='http://localhost:8888/callback'
-device_name = 'RPI'
 vol_set = False
 refresh = True
 playing = True
@@ -270,6 +273,8 @@ while not io.input(26):
             if(sp.current_playback()['device']['id']!=DEVICE_ID):
                 io.output(screen, False)
                 vol_set = False
+            else:
+                io.output(screen, True)
             
             
             if new_instance:
@@ -281,7 +286,7 @@ while not io.input(26):
                 display.lcd_display_string(new_user,2)
                 sleep(2)
 
-            if(hraje!=diakritika(sp.currently_playing()['item']['name'])):
+            if(sp.current_playback()["progress_ms"]<2000):
                 refresh = True
                 print("New song")
                 print(sp.currently_playing()['item']['name'])
