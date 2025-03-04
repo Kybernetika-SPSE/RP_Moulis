@@ -7,35 +7,29 @@ from datetime import datetime
 import RPi.GPIO as io
 sleep(5)
 print("started")
-
+# data
 client_id='5984261fa2d845b3bcf6463bb1df2c97'
 client_secret='9c2280c3c0ae4d9392a8870b90165b91'
 redirect_uri='http://localhost:8888/callback'
 device_name = 'RPI'
-
+#inicializace
+screen = 17
+io.setwarnings(False)
+io.setmode(io.BCM)
+io.setup(screen, io.OUT)
+io.setup(26, io.IN, pull_up_down=io.PUD_UP)
+display = drivers.Lcd()
+# definice funkcí
 def get_device(name):
+    # získej id zařízení
     device = sp.devices()['devices']
     out = ""
     for i in range(0,len(device)):
         if(device[i]['name']==name):
             out = device[i]['id']
     return out
-def long_string(display, text='', num_line=1, num_cols=16):
-		""" 
-		Parameters: (driver, string to print, number of line to print, number of columns of your display)
-		Return: This function send to display your scrolling string.
-		"""
-		if len(text) > num_cols:
-			display.lcd_display_string(text[:num_cols], num_line)
-			sleep(1)
-			for i in range(len(text) - num_cols + 1):
-				text_to_print = text[i:i+num_cols]
-				display.lcd_display_string(text_to_print, num_line)
-				sleep(0.2)
-			sleep(1)
-		else:
-			display.lcd_display_string(text, num_line)  
 def long_string_both(display, hraje='', interpret='', play=True, num_cols=16):
+    # řeší vypisování údajů na display
     global refresh
     global tic
     global toc
@@ -44,14 +38,14 @@ def long_string_both(display, hraje='', interpret='', play=True, num_cols=16):
     if play != was_playing:
         was_playing = play
         refresh = True
-
+    # zjisti posun textu
     if refresh == True:
         refresh = False
         print("refresh")
         tic = perf_counter()
     toc = perf_counter()
     deltaT = toc-tic
-    
+    # zjisti progres písničky v %
     progress = min(int(100*sp.current_playback()["progress_ms"])/sp.current_playback()["item"]["duration_ms"],96)
     for j in range(0,16):
                 if j >= len(hraje):
@@ -97,6 +91,7 @@ def long_string_both(display, hraje='', interpret='', play=True, num_cols=16):
             refresh = True
     return refresh
 def diakritika(string=str):
+    # převeď českou diakritiku na více friendly text
     prevod = [['á','a'],
               ['Á','A'],
               ['č','c'],
@@ -223,43 +218,34 @@ def customchar():
     cc.load_custom_characters_data()
 
     
-
+# systémové proměné
 vol_set = False
 refresh = True
 playing = True
 was_playing = True
 tic = 0.0
 toc = 0.0
-screen = 17
 interpret = ""
 hraje = ""
 new_instance = True
 new_user = ""
-io.setwarnings(False)
-io.setmode(io.BCM)
-io.setup(screen, io.OUT)
-io.setup(26, io.IN, pull_up_down=io.PUD_UP)
-display = drivers.Lcd()
 
-# Spotify Authentication
+
+# Autorizace spotify
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri,scope="user-read-playback-state,user-modify-playback-state"))
 
-#device = sp.devices()[]
+# získej zařízení
 DEVICE_ID = get_device(device_name)
 print(DEVICE_ID)
-#if(DEVICE_ID!=""):
-    #sp.transfer_playback(DEVICE_ID,True)
-    #sp.volume(100,DEVICE_ID)
 
-
-#uncoment when using custom characters
 customchar()
 
-
+# hlavní smyčka, běží dokud je uzemněný pin 26
 while not io.input(26):
     try:
-        print("Writing to display")
+        print("Nová smyčka")
         while not io.input(26):
+            # pokud je přehrávání nově přesunuto na zařízení, nastav hlasitost na 100%
             if(not vol_set):
                 DEVICE_ID = get_device(device_name)
                 print(DEVICE_ID)
@@ -268,17 +254,17 @@ while not io.input(26):
                         sp.volume(100,DEVICE_ID)
                         vol_set = True
                     except:
-                        print("couldnt set volume")
-                
+                        print("nastavení hlasitosti selhalo")
+            # vypni displej pokud není přehrávání aktivní
             if(sp.current_playback()['device']['id']!=DEVICE_ID):
                 io.output(screen, False)
                 vol_set = False
-                print("off, due to device != DEVICE_ID")
+                print("screen off, due to device != DEVICE_ID")
             else:
                 io.output(screen, True)
-                print("on, due to device == DEVICE_ID")
+                print("screen on, due to device == DEVICE_ID")
             
-            
+            # vypiš na display jméno přihlášeného uživatele, když se poprvé přihlásí
             if new_instance:
                 io.output(screen, True)
                 print("on, due to new instance")
@@ -289,22 +275,22 @@ while not io.input(26):
                 display.lcd_display_string(new_user,2)
                 sleep(2)
 
+            # resetuj scroll displeje pokud začala nová písnička
             if(sp.current_playback()["progress_ms"]<2000):
                 refresh = True
                 print("New song")
                 print(sp.currently_playing()['item']['name'])
                 print(sp.currently_playing()['item']['album']['artists'][0]['name'])
             
-            playing = sp.current_playback()['is_playing']
-            
-            
+            # vypiš na displej
+            playing = sp.current_playback()['is_playing']    
             interpret = diakritika(sp.currently_playing()['item']['album']['artists'][0]['name'])
             hraje = diakritika(sp.currently_playing()['item']['name'])
             long_string_both(display,hraje,interpret,playing)
     except KeyboardInterrupt:
-        # If there is a KeyboardInterrupt (when you press ctrl+c), exit the program and cleanup
         break
     except TypeError as Te:
+        # chyba když není připojen účet spoitfy
         io.cleanup()
         sleep(1)
         print(Te)
@@ -321,6 +307,7 @@ while not io.input(26):
         print(DEVICE_ID)
         
     except OSError:
+        # chyba při špatném připojení kontaků displeje
         sleep(2)
         try:
             io.setmode(io.BCM)
@@ -332,7 +319,7 @@ while not io.input(26):
             print("trying to reconect lcd")
     
 
-
+# cleanup
 print("Cleaning up!")
 io.cleanup()
 display.lcd_clear()
