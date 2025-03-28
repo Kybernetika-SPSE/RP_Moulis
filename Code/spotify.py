@@ -274,7 +274,7 @@ while not io.input(26):
                 display.lcd_display_string("Prihlasen jako: ", 1)
                 display.lcd_display_string(new_user,2)
                 sleep(2)
-                sp.transfer_playback(get_device(device_name),True)
+                
 
             # resetuj scroll displeje pokud začala nová písnička
             if(sp.current_playback()["progress_ms"]<2000):
