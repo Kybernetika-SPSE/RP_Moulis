@@ -248,8 +248,7 @@ try:
     print(DEVICE_ID)
 except TimeoutError as e:
     print(e)
-finally:
-    signal.alarm(0)
+
 
 
 
