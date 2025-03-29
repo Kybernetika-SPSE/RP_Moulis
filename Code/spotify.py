@@ -233,7 +233,7 @@ interpret = ""
 hraje = ""
 new_instance = True
 new_user = ""
-
+limited = True
 
 
 
@@ -247,11 +247,14 @@ try:
         # získej zařízení
         DEVICE_ID = get_device(device_name)
         print(DEVICE_ID)
+        limited = False
     except TimeoutError as e:
         print(e)
     signal.alarm(0)
 except Exception as e:
     print(e)
+    
+        
 
 
 
@@ -263,6 +266,21 @@ while not io.input(26):
     try:
         print("Nová smyčka")
         while not io.input(26):
+            dev = sc.check_connected_devices()
+            if(dev):
+                print(dev)
+                io.output(screen, True)
+                display.lcd_display_extended_string(line=1,string="{0x07} Bluetooth")
+                display.lcd_display_string(line=2,string=diakritika(dev[0]))
+                continue
+            else:
+                io.output(screen, False)
+                print("bt only not conected")
+                signal.alarm(5)
+
+
+
+
             # pokud je přehrávání nově přesunuto na zařízení, nastav hlasitost na 100%
             if(not vol_set):
                 DEVICE_ID = get_device(device_name)
@@ -345,6 +363,9 @@ while not io.input(26):
             cc.load_custom_characters_data()     
         except:
             print("trying to reconect lcd")
+    except Exception as e:
+        print(e)
+        signal.alarm(0)
     
 
 # cleanup
