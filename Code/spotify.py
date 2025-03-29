@@ -235,10 +235,12 @@ print("stuck1")
 # Autorizace spotify
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri,scope="user-read-playback-state,user-modify-playback-state"))
 print("stuck2")
-
-# získej zařízení
-DEVICE_ID = get_device(device_name)
-print(DEVICE_ID)
+try:
+    # získej zařízení
+    DEVICE_ID = get_device(device_name)
+    print(DEVICE_ID)
+except Exception as e:
+    print(e)
 print("stuck3")
 customchar()
 
