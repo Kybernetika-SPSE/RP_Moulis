@@ -5,6 +5,7 @@ from time import perf_counter
 import drivers
 from datetime import datetime
 import RPi.GPIO as io
+import soundcheck as sc
 sleep(5)
 print("started")
 # data
@@ -257,9 +258,14 @@ while not io.input(26):
                         print("nastavení hlasitosti selhalo")
             # vypni displej pokud není přehrávání aktivní
             if(sp.current_playback()['device']['id']!=DEVICE_ID):
-                io.output(screen, False)
-                vol_set = False
-                print("screen off, due to device != DEVICE_ID")
+                if(sc.check_connected_devices!=False):
+                    print(sc.check_connected_devices)
+                    io.output(screen, True)
+                else:
+                    io.output(screen, False)
+                    vol_set = False
+                    print("screen off, due to device != DEVICE_ID")
+                
             else:
                 io.output(screen, True)
                 print("screen on, due to device == DEVICE_ID")
