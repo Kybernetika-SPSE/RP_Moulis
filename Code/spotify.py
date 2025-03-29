@@ -254,11 +254,7 @@ try:
 except Exception as e:
     print(e)
     
-        
-
-
-
-
+    
 customchar()
 
 # hlavní smyčka, běží dokud je uzemněný pin 26
