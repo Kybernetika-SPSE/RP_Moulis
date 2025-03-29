@@ -266,7 +266,7 @@ while not io.input(26):
             if(dev):
                 print(dev)
                 io.output(screen, True)
-                display.lcd_display_extended_string(line=1,string="{0x07} Bluetooth")
+                display.lcd_display_extended_string(line=1,string="{0x07} Bluetooth     ")
                 name = ""
                 for i in dev:
                     if(i=="("):
