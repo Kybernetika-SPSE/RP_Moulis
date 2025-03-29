@@ -272,7 +272,7 @@ while not io.input(26):
                 io.output(screen, True)
                 display.lcd_display_extended_string(line=1,string="{0x07} Bluetooth")
                 name = ""
-                for i in dev[0]:
+                for i in dev:
                     if(i=="("):
                         break
                     name = name+diakritika(i)
