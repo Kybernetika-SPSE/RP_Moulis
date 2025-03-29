@@ -259,7 +259,7 @@ while not io.input(26):
             # vypni displej pokud není přehrávání aktivní
             if(sp.current_playback()['device']['id']!=DEVICE_ID):
                 if(sc.check_connected_devices!=False):
-                    print(sc.check_connected_devices)
+                    print(sc.check_connected_devices())
                     io.output(screen, True)
                 else:
                     io.output(screen, False)
