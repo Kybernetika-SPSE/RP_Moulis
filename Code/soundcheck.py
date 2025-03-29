@@ -23,15 +23,19 @@ def check_audio_output():
 # Spuštění funkce
 check_audio_output()
 
-import dbus
+import subprocess
 
-def get_bluetooth_metadata():
-    bus = dbus.SystemBus()
-    proxy = bus.get_object("org.bluez", "/org/bluez/hci0/dev_B8_27_EB_F1_58_9B/player0")
-    interface = dbus.Interface(proxy, "org.bluez.MediaPlayer1")
-    properties = interface.GetAll("org.bluez.MediaPlayer1")
-    print("Název skladby:", properties.get("Track", {}).get("Title", "Neznámý"))
-    print("Interpret:", properties.get("Track", {}).get("Artist", "Neznámý"))
-    print("Album:", properties.get("Track", {}).get("Album", "Neznámý"))
+def check_connected_devices():
+    try:
+        output = subprocess.check_output("bluetoothctl devices", shell=True).decode()
+        devices = output.strip().split("\n")
+        if devices:
+            print("Připojená Bluetooth zařízení:")
+            for device in devices:
+                print(device)
+        else:
+            print("Žádná zařízení nejsou připojena.")
+    except subprocess.CalledProcessError as e:
+        print(f"Chyba při detekci zařízení: {e}")
 
-get_bluetooth_metadata()
+check_connected_devices()
