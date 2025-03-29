@@ -231,16 +231,33 @@ hraje = ""
 new_instance = True
 new_user = ""
 
+import signal
+def handler(signum, frame):
+    raise TimeoutError("Funkce trvala příliš dlouho!")
+
+
+
+
+
+
+
 print("stuck1")
 # Autorizace spotify
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri,scope="user-read-playback-state,user-modify-playback-state"))
 print("stuck2")
+signal.signal(signal.SIGALRM, handler)
+signal.alarm(5)  # Spustí odpočet 5 sekund
 try:
     # získej zařízení
     DEVICE_ID = get_device(device_name)
     print(DEVICE_ID)
-except Exception as e:
+except TimeoutError as e:
     print(e)
+finally:
+    signal.alarm(0)
+
+
+
 print("stuck3")
 customchar()
 
