@@ -22,3 +22,16 @@ def check_audio_output():
 
 # Spuštění funkce
 check_audio_output()
+
+import dbus
+
+def get_bluetooth_metadata():
+    bus = dbus.SystemBus()
+    proxy = bus.get_object("org.bluez", "/org/bluez/hci0/dev_B8_27_EB_F1_58_9B/player0")
+    interface = dbus.Interface(proxy, "org.bluez.MediaPlayer1")
+    properties = interface.GetAll("org.bluez.MediaPlayer1")
+    print("Název skladby:", properties.get("Track", {}).get("Title", "Neznámý"))
+    print("Interpret:", properties.get("Track", {}).get("Artist", "Neznámý"))
+    print("Album:", properties.get("Track", {}).get("Album", "Neznámý"))
+
+get_bluetooth_metadata()
