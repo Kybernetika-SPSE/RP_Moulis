@@ -234,8 +234,8 @@ hraje = ""
 new_instance = True
 new_user = ""
 limited = True
-
-
+display.lcd_display_string(line=2,string="Started")
+io.output(screen, True)
 
 # Autorizace spotify
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,client_secret=client_secret,redirect_uri=redirect_uri,scope="user-read-playback-state,user-modify-playback-state"))
