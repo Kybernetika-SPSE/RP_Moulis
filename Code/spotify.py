@@ -277,6 +277,7 @@ while not io.input(26):
                         break
                     name = name+diakritika(i)
                 display.lcd_display_string(line=2,string=name)
+                print(name)
                 continue
             else:
                 io.output(screen, False)
