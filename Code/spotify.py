@@ -263,7 +263,7 @@ while not io.input(26):
                     print(dev)
                     io.output(screen, True)
                     display.lcd_display_extended_string(line=1,string="{0x07} Bluetooth")
-                    display.lcd_display_string(line=2,string=dev[0])
+                    display.lcd_display_string(line=2,string=diakritika(dev[0]))
                     continue
                 else:
                     io.output(screen, False)
