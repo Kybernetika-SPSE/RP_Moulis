@@ -208,13 +208,13 @@ def customchar():
                     "00000"]
 
     # Custom caracter #8. Code {0x07}.
-    cc.char_8_data = ["00000",
-                    "00000",
-                    "00000",
-                    "00000",
-                    "00000",
-                    "00000",
-                    "00000",
+    cc.char_8_data = ["00110",
+                    "10101",
+                    "01110",
+                    "00100",
+                    "01110",
+                    "10101",
+                    "00110",
                     "00000"]
     cc.load_custom_characters_data()
 
@@ -258,9 +258,13 @@ while not io.input(26):
                         print("nastavení hlasitosti selhalo")
             # vypni displej pokud není přehrávání aktivní
             if(sp.current_playback()['device']['id']!=DEVICE_ID):
-                if(sc.check_connected_devices!=False):
-                    print(sc.check_connected_devices())
+                dev = sc.check_connected_devices()
+                if(dev):
+                    print(dev)
                     io.output(screen, True)
+                    display.lcd_display_extended_string(line=1,string="{0x07} Bluetooth")
+                    display.lcd_display_string(line=2,string=dev[0])
+                    continue
                 else:
                     io.output(screen, False)
                     vol_set = False
