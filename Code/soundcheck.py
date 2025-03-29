@@ -5,7 +5,7 @@ def check_connected_devices():
         # Získání seznamu zařízení
         output = subprocess.check_output("bluetoothctl devices", shell=True).decode()
         devices = output.strip().split("\n")
-        
+        print(devices)
         if devices:
             print("Kontroluji připojená Bluetooth zařízení...")
             connected_devices = []
@@ -37,4 +37,3 @@ def check_connected_devices():
         print(f"Chyba při detekci zařízení: {e}")
         return False
 
-check_connected_devices()
