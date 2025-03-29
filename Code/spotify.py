@@ -6,6 +6,9 @@ import drivers
 from datetime import datetime
 import RPi.GPIO as io
 import soundcheck as sc
+import signal
+def handler(signum, frame):
+    raise TimeoutError("Funkce trvala příliš dlouho!")
 sleep(5)
 print("started")
 # data
@@ -230,14 +233,6 @@ interpret = ""
 hraje = ""
 new_instance = True
 new_user = ""
-
-import signal
-def handler(signum, frame):
-    raise TimeoutError("Funkce trvala příliš dlouho!")
-
-
-
-
 
 
 
