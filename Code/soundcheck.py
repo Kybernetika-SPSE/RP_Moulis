@@ -24,7 +24,7 @@ def check_connected_devices():
             if connected_devices:
                 print("Aktuálně připojená Bluetooth zařízení:")
                 for connected_device in connected_devices:
-                    print(connected_device)
+                    #print(connected_device)
                     return connected_device
             else:
                 print("Žádná zařízení nejsou aktuálně připojena.")
