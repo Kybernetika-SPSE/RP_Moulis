@@ -263,7 +263,7 @@ while not io.input(26):
         print("Nová smyčka")
         while not io.input(26):
             dev = sc.check_connected_devices()
-            if(dev):
+            if(dev!=False):
                 print(dev)
                 io.output(screen, True)
                 display.lcd_display_extended_string(line=1,string="{0x07} Bluetooth     ")
@@ -278,7 +278,7 @@ while not io.input(26):
                 continue
             else:
                 print(dev)
-                io.output(screen, False)
+                #io.output(screen, False)
                 print("bt only not conected")
                 signal.alarm(5)
 
