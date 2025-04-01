@@ -278,7 +278,7 @@ while not io.input(26):
                 continue
             else:
                 print(dev)
-                #io.output(screen, False)
+                # io.output(screen, False)
                 print("bt only not conected")
                 signal.alarm(5)
 
