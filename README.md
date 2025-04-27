@@ -24,20 +24,23 @@ Tento projekt se zaměřuje na modernizaci starého zvukového systému.
    sudo apt update && sudo apt install -y curl git python3-pip pulseaudio bluez-tools
 
 - Konfigurace zvukového výstupu: Do souboru /boot/config.txt se přidají následující řádky:
-dtparam=audio=on
-gpio=12,13,a5
-audio_pwm_mode=2
-dtoverlay=audremap, pins_12_13
+   ```
+   dtparam=audio=on
+   gpio=12,13,a5
+   audio_pwm_mode=2
+   dtoverlay=audremap, pins_12_13
 
 - Instalace Raspotify pro přehrávání Spotify:
-curl -sL https://dtcooper.github.io/raspotify/install.sh | bash
+   ```
+   curl -sL https://dtcooper.github.io/raspotify/install.sh | bash
 
 - Konfigurace Bluetooth pro automatické párování:
-sudo systemctl enable bluetooth
-sudo systemctl start bluetooth
+   ```
+   sudo systemctl enable bluetooth
+   sudo systemctl start bluetooth
 
 
-🔧 Možná vylepšení
+## 🔧 Možná vylepšení
 - Integrace baterie pro plně přenosné využití
 - Vylepšení grafického rozhraní na displeji
 - Snížení šumu na zvukovém výstupu
