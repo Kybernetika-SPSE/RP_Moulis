@@ -11,29 +11,28 @@ def handler(signum, frame):
     raise TimeoutError("Funkce trvala příliš dlouho!")
 sleep(5)
 print("started")
-# data
+# Deklarace proměnných
 client_id='5984261fa2d845b3bcf6463bb1df2c97'
 client_secret='9c2280c3c0ae4d9392a8870b90165b91'
 redirect_uri='http://localhost:8888/callback'
 device_name = 'RPI'
-#inicializace
+# Inicializace
 screen = 17
 io.setwarnings(False)
 io.setmode(io.BCM)
 io.setup(screen, io.OUT)
 io.setup(26, io.IN, pull_up_down=io.PUD_UP)
 display = drivers.Lcd()
-# definice funkcí
+# Definice funkcí
 def get_device(name):
-    # získej id zařízení
+    # Získej id zařízení
     device = sp.devices()['devices']
     out = ""
     for i in range(0,len(device)):
         if(device[i]['name']==name):
             out = device[i]['id']
     return out
-def long_string_both(display, hraje='', interpret='', play=True, num_cols=16):
-    # řeší vypisování údajů na display
+def long_string_both(display, hraje='', interpret='', play=True, num_cols=16): # řeší vypisování údajů na display
     global refresh
     global tic
     global toc
@@ -94,7 +93,7 @@ def long_string_both(display, hraje='', interpret='', play=True, num_cols=16):
         if(i*4>len(interpret)+4):
             refresh = True
     return refresh
-def diakritika(string=str):
+def diakritika(string=str): #převod české diakritiky na ascii znaky
     # převeď českou diakritiku na více friendly text
     prevod = [['á','a'],
               ['Á','A'],
@@ -135,7 +134,7 @@ def diakritika(string=str):
                 new = new+string[j] 
         string = new
     return string
-def customchar():
+def customchar(): # inicializace vlastních znaků
     global cc
     cc = drivers.CustomCharacters(display)
 
@@ -222,7 +221,7 @@ def customchar():
     cc.load_custom_characters_data()
 
     
-# systémové proměné
+# Systémové proměné
 vol_set = False
 refresh = True
 playing = True
@@ -244,7 +243,7 @@ signal.signal(signal.SIGALRM, handler)
 signal.alarm(5)  # Spustí odpočet 5 sekund
 try:
     try:
-        # získej zařízení
+        # Získej id zařízení
         DEVICE_ID = get_device(device_name)
         print(DEVICE_ID)
         limited = False
@@ -262,6 +261,7 @@ while not io.input(26):
     try:
         print("Nová smyčka")
         while not io.input(26):
+            # Nejprve zkontroluje zdroj přehrávání
             dev = sc.check_connected_devices()
             if(dev!=False):
                 print(dev)

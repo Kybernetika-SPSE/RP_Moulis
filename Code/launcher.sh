@@ -1,12 +1,12 @@
 #!/bin/sh
-# launcher.sh
-# navigate to home directory, then to this directory, then execute python script, then back home
+# Provede synchronizaci s kódem na GitHubu
 cd /
 cd home/mouli/RP_Moulis
 sudo git reset --hard origin/main
 sudo git pull
 sudo git reset --hard origin/main
 cd /
+# Spustí script na vypisování informací na display
 cd home/mouli/RP_Moulis/Code
 sudo python spotify.py
 cd /
