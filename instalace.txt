@@ -1,0 +1,7 @@
+sudo apt update && sudo apt install -y curl git python3-pip pulseaudio bluez-tools
+curl -sL https://dtcooper.github.io/raspotify/install.sh | bash
+sudo systemctl enable bluetooth
+sudo systemctl start Bluetooth
+sudo git clone https://github.com/Kybernetika-SPSE/RP_Moulis.git
+sudo nano /etc/raspotify/conf
+sudo raspi-config

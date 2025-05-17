@@ -37,7 +37,7 @@ sudo systemctl enable bluetooth
 sudo systemctl start bluetooth
 
 
-🔧 Možná vylepšení
+## 🔧 Možná vylepšení
 - Integrace baterie pro plně přenosné využití
 - Vylepšení grafického rozhraní na displeji
 - Snížení šumu na zvukovém výstupu
